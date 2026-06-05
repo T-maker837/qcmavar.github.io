@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+  <html lang="fr">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AVARE QCM</title>
+  <style>
+  :root{--dark:#0f172a;--acc:#1e40af;--acc2:#3b82f6;--bg:#f8fafc;--card:#fff;--bdr:#e2e8f0;--txt:#334155;--ok:#15803d;--bad:#dc2626}
+  *{box-sizing:border-box}
+  body{font-family:Georgia,serif;background:var(--bg);color:var(--txt);margin:0;padding:0;line-height:1.6}
+  .nb{background:var(--dark);padding:0 28px;display:flex;justify-content:space-between;align-items:center;height:62px;box-shadow:0 4px 12px rgba(0,0,0,.18)}
+  .nb .logo{color:#f8fafc;font-size:18px;font-weight:700;cursor:pointer;letter-spacing:.3px}
+  .nb .nm{display:flex;gap:4px;flex-wrap:wrap}
+  .nb .nm button{background:none;border:none;color:#94a3b8;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;border-radius:5px;transition:all .15s;font-family:Georgia,serif}
+  .nb .nm button:hover,.nb .nm button.at{color:#fff;background:rgba(255,255,255,.12)}
+  .main{max-width:980px;margin:36px auto;padding:0 18px}
+  .panel{display:none;background:var(--card);border:1px solid var(--bdr);border-radius:10px;padding:36px;box-shadow:0 4px 12px rgba(0,0,0,.05)}
+  .panel.active{display:block}
+  h1{font-size:24px;color:var(--dark);margin:0 0 22px;border-bottom:3px solid var(--dark);padding-bottom:10px}
+  h2{font-size:18px;color:var(--dark);margin:0 0 14px;font-weight:700}
+  .hgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
+  .hcard{border:2px solid var(--dark);border-radius:8px;padding:22px;text-align:center}
+  .hcard .big{display:block;font-size:40px;font-weight:900;color:var(--acc2)}
+  .hcard .lbl{font-size:13px;font-weight:600;margin-top:4px}
+  .dgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px}
+  .dcard{border:2px solid var(--dark);border-radius:8px;padding:26px;cursor:pointer;transition:all .18s}
+  .dcard:hover{background:#f1f5f9;transform:translateY(-2px)}
+  .dcard h3{margin:0 0 8px;font-size:17px;color:var(--dark)}
+  .atabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;padding:12px 14px;background:#f8fafc;border-radius:8px;border:1px solid var(--bdr)}
+  .atab{padding:7px 18px;border-radius:18px;border:2px solid #cbd5e1;background:#fff;color:var(--txt);font-weight:700;font-size:13px;cursor:pointer;transition:all .15s;font-family:Georgia,serif}
+  .atab:hover{border-color:var(--dark);color:var(--dark)}
+  .atab.active{background:var(--dark);border-color:var(--dark);color:#fff}
+  .pbox{font-style:italic;color:var(--acc);font-weight:600;margin-bottom:20px;background:#eff6ff;padding:13px 16px;border-radius:6px;font-size:14px;border-left:4px solid var(--acc2)}
+  .lb{border:1px solid var(--bdr);border-radius:8px;margin-bottom:24px}
+  .lh{background:#f1f5f9;padding:14px 22px;font-size:16px;font-weight:700;border-bottom:2px solid var(--dark);color:var(--dark);display:flex;justify-content:space-between;align-items:center}
+  .lbody{padding:20px 22px}
+  .mt{font-weight:700;color:var(--dark);margin-top:16px;margin-bottom:4px;font-size:11px;text-transform:uppercase;letter-spacing:.6px}
+  .qbox{background:#f0fdf4;border-left:4px solid var(--ok);padding:12px 14px;margin:10px 0;font-style:italic;font-size:14px;color:#166534;border-radius:0 6px 6px 0}
+  .bdg{font-size:11px;padding:3px 10px;border-radius:12px;font-weight:700;white-space:nowrap}
+  .bn{background:#e2e8f0;color:#475569}
+  .bd{background:#dcfce7;color:#15803d}
+  .acgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:14px;margin-top:14px}
+  .acard{border:2px solid var(--dark);border-radius:10px;padding:24px 14px 20px;text-align:center;cursor:pointer;transition:all .18s;background:#fff}
+  .acard:hover{background:var(--dark);color:#fff;transform:translateY(-3px);box-shadow:0 8px 22px rgba(0,0,0,.12)}
+  .acard .num{display:block;font-size:30px;font-weight:900;color:var(--acc2);transition:color .18s}
+  .acard:hover .num{color:#93c5fd}
+  .acard .albl{font-size:14px;font-weight:700;display:block;margin-bottom:4px}
+  .acard .asub{font-size:11px;line-height:1.4;opacity:.65}
+  .acard .acnt{margin-top:10px;font-size:11px;font-weight:700;display:inline-block;padding:3px 10px;background:#f1f5f9;border-radius:10px;transition:all .18s}
+  .acard:hover .acnt{background:rgba(255,255,255,.15);color:#fff}
+  .slist{display:flex;flex-direction:column;gap:10px}
+  .sitem{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--bdr);padding:14px 20px;border-radius:7px;background:#fff;cursor:pointer;transition:all .15s}
+  .sitem:hover{border-color:var(--acc2);background:#f8fafc}
+  .bbtn{display:inline-flex;align-items:center;gap:5px;padding:7px 16px;border:1px solid var(--bdr);border-radius:6px;background:#fff;cursor:pointer;font-size:13px;font-weight:600;color:var(--txt);margin-bottom:18px;transition:all .15s;font-family:Georgia,serif}
+  .bbtn:hover{background:#f1f5f9;border-color:var(--dark)}
+  .qhdr{display:flex;justify-content:space-between;align-items:center;background:#f8fafc;padding:11px 18px;border:1px solid var(--bdr);border-radius:6px;margin-bottom:22px;font-weight:600}
+  .qsl{display:none}
+  .qsl.active{display:block}
+  .albl2{display:flex;align-items:center;border:1px solid var(--bdr);padding:13px 17px;border-radius:6px;cursor:pointer;background:#fff;margin-bottom:9px;transition:all .15s;font-size:14px}
+  .albl2:hover{background:#f8fafc;border-color:#94a3b8}
+  .albl2 input{margin-right:13px;transform:scale(1.1)}
+  .expl{margin-top:16px;padding:13px;border-radius:6px;display:none;font-size:14px}
+  .eok{background:#f0fdf4;color:#166534;border:1px solid #bbf7d0}
+  .ebad{background:#fef2f2;color:#991b1b;border:1px solid #fecaca}
+  .abar{display:flex;justify-content:space-between;margin-top:26px;padding-top:16px;border-top:1px solid var(--bdr)}
+  .btn{padding:9px 22px;border-radius:6px;font-weight:700;cursor:pointer;border:none;font-size:13px;transition:background .15s;font-family:Georgia,serif}
+  .bbl{background:var(--acc);color:#fff}
+  .bbl:hover{background:var(--acc2)}
+  .bbl:disabled{background:#cbd5e1;color:#94a3b8;cursor:not-allowed}
+  .bgr{background:#f1f5f9;color:#475569}
+  .bgr:hover{background:#e2e8f0}
+  /* Moyenne top cards — centrees et alignees */
+  .mtop{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:26px;align-items:stretch}
+  .mst{background:#f8fafc;border:1px solid var(--bdr);border-radius:8px;padding:18px 16px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;min-height:90px}
+  .mstl{font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+  .mstv{font-size:30px;font-weight:900;color:var(--acc2);line-height:1}
+  .asec{margin-bottom:16px}
+  .asech{display:flex;justify-content:space-between;align-items:center;padding:11px 15px;background:#f1f5f9;border-radius:6px;margin-bottom:6px;cursor:pointer;border:1px solid var(--bdr)}
+  .asech:hover{background:#e2e8f0}
+  .asect{font-weight:700;color:var(--dark);font-size:14px}
+  .asecs{font-weight:700;color:var(--acc2);font-size:14px}
+  .abody{overflow:hidden;max-height:0;transition:max-height .3s ease}
+  .abody.open{max-height:2000px}
+  .stbl{width:100%;border-collapse:collapse;margin-top:6px}
+  .stbl th,.stbl td{border:1px solid var(--bdr);padding:9px 12px;text-align:left;font-size:13px}
+  .stbl th{background:#f8fafc;color:var(--dark);font-weight:700}
+  .pw{background:#e2e8f0;border-radius:4px;height:7px;width:100%;overflow:hidden}
+  .pb{background:var(--ok);height:100%;transition:width .4s}
+  .sec-sep{border-top:2px solid var(--bdr);margin:28px 0 22px;padding-top:22px}
+  .sec-lbl{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#64748b;margin-bottom:12px}
+  @media(max-width:640px){
+    .nb{padding:0 14px;height:auto;flex-direction:column;padding:10px 14px;gap:8px}
+    .nb .nm{flex-wrap:wrap;justify-content:center}
+    .main{margin:18px auto;padding:0 12px}
+    .panel{padding:20px 16px}
+    .hgrid,.dgrid,.mtop{grid-template-columns:1fr}
+    .acgrid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+  }
+  </style>
+  </head>
+  <body>
+  <div class="nb">
+    <div class="logo" onclick="nav('accueil')">Moliere -- L'Avare (Piece Complete)</div>
+    <div class="nm">
+      <button id="tab-accueil" class="at" onclick="nav('accueil')">Accueil</button>
+      <button id="tab-lecons" onclick="nav('lecons')">Lecons</button>
+      <button id="tab-qcm" onclick="nav('qcm')">QCM</button>
+      <button id="tab-vocab-theatre" onclick="nav('vocab-theatre')">Vocabulaire Theatre</button>
+      <button id="tab-moyenne" onclick="nav('moyenne')">Moyenne</button>
+      <button id="tab-aide" onclick="nav('aide')">Aide</button>
+    </div>
+  </div>
+  <div class="main">
+
+  <!-- ACCUEIL -->
+  <div id="panel-accueil" class="panel active">
+    <h1>L'Avare de Moliere</h1>
+    <p style="font-size:15px">Maitrisez la piece dans son integralite : 5 actes, 32 scenes analysees, 320 questions de controle. Plus un module complet sur le vocabulaire du theatre.</p>
+    <div class="hgrid">
+      <div class="hcard"><span class="big">5</span><span class="lbl">Actes</span></div>
+      <div class="hcard"><span class="big">32</span><span class="lbl">Scenes analysees</span></div>
+      <div class="hcard"><span class="big">350</span><span class="lbl">Questions QCM</span></div>
+    </div>
+    <div class="dgrid" style="margin-top:22px">
+      <div class="dcard" onclick="nav('lecons')"><h3>Fiches de Cours</h3><p style="font-size:13px;color:#64748b;margin:0">Analyse de chaque scene par acte : resume, citation, decryptage critique.</p></div>
+      <div class="dcard" onclick="nav('qcm')"><h3>Series d'Evaluations</h3><p style="font-size:13px;color:#64748b;margin:0">350 questions notees sur 20 avec correction instantanee, classees par acte.</p></div>
+      <div class="dcard" onclick="nav('vocab-theatre')"><h3>Vocabulaire Theatre</h3><p style="font-size:13px;color:#64748b;margin:0">3 categories de vocabulaire : parties du theatre, termes dramaturgiques, types de comique.</p></div>
+      <div class="dcard" onclick="nav('moyenne')"><h3>Tableau de Bord</h3><p style="font-size:13px;color:#64748b;margin:0">Suivez votre progression et votre moyenne generale toutes evaluations confondues.</p></div>
+    </div>
+  </div>
+
+  <!-- LECONS -->
+  <div id="panel-lecons" class="panel">
+    <h1>Fiches de Cours -- L'Avare (Integrale)</h1>
+    <div class="atabs" id="ltabs">
+      <button class="atab active" onclick="selAct(1)">Acte I</button>
+      <button class="atab" onclick="selAct(2)">Acte II</button>
+      <button class="atab" onclick="selAct(3)">Acte III</button>
+      <button class="atab" onclick="selAct(4)">Acte IV</button>
+      <button class="atab" onclick="selAct(5)">Acte V</button>
+      <button class="atab" onclick="nav('vocab-theatre')">Vocabulaire Theatre</button>
+    </div>
+    <div id="ltarget"></div>
+  </div>
+
+  <!-- QCM -->
+  <div id="panel-qcm" class="panel">
+    <h1>Series QCM -- L'Avare (Integrale)</h1>
+    <div id="qas">
+      <div class="sec-lbl">L'Avare de Moliere -- Choisissez un acte</div>
+      <div class="acgrid" id="qcards"></div>
+      <div class="sec-sep">
+        <div class="sec-lbl">Module Vocabulaire Theatre -- Choisissez une categorie</div>
+        <div class="acgrid" id="qcards-vocab">
+          <div class="acard" onclick="startVocabQ(1)">
+            <span class="num" id="vt1-num">?</span>
+            <span class="albl">Parties du theatre</span>
+            <span class="asub">Espaces et lieux</span>
+            <span class="acnt" id="vt1-cnt">Non evalue</span>
+          </div>
+          <div class="acard" onclick="startVocabQ(2)">
+            <span class="num" id="vt2-num">?</span>
+            <span class="albl">Vocabulaire du theatre</span>
+            <span class="asub">Termes dramaturgiques</span>
+            <span class="acnt" id="vt2-cnt">Non evalue</span>
+          </div>
+          <div class="acard" onclick="startVocabQ(3)">
+            <span class="num" id="vt3-num">?</span>
+            <span class="albl">Types de comique</span>
+            <span class="asub">Les formes du rire</span>
+            <span class="acnt" id="vt3-cnt">Non evalue</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="qss" style="display:none">
+      <button class="bbtn" onclick="showAS()">&#8592; Retour aux actes</button>
+      <div id="qsh"></div>
+      <div class="slist" id="qsl"></div>
+    </div>
+  </div>
+
+  <!-- VOCABULAIRE THEATRE -->
+  <div id="panel-vocab-theatre" class="panel">
+    <h1>Vocabulaire du Theatre</h1>
+    <div class="atabs" id="vtabs">
+      <button class="atab active" onclick="selVTab(1)">Parties du theatre</button>
+      <button class="atab" onclick="selVTab(2)">Vocabulaire du theatre</button>
+      <button class="atab" onclick="selVTab(3)">Types de comique</button>
+    </div>
+    <div id="vtarget"></div>
+  </div>
+
+  <!-- MOTEUR QCM -->
+  <div id="panel-quiz-engine" class="panel">
+    <div class="qhdr">
+      <span id="qtitle" style="font-size:14px;font-weight:700"></span>
+      <span id="qctr" style="font-size:13px;color:#64748b">1/10</span>
+    </div>
+    <div id="qsls"></div>
+    <div class="abar">
+      <button class="btn bgr" id="bprev" onclick="mv(-1)">&#8592; Precedent</button>
+      <button class="btn bbl" id="bnext" onclick="mv(1)" disabled>Suivant &#8594;</button>
+      <button class="btn bbl" id="bfin" onclick="finQ()" style="display:none">Valider ma note</button>
+    </div>
+  </div>
+
+  <!-- MOYENNE -->
+  <div id="panel-moyenne" class="panel">
+    <h1>Tableau de Bord</h1>
+    <div id="mc"></div>
+  </div>
+
+  <!-- AIDE -->
+  <div id="panel-aide" class="panel">
+    <h1>Guide Methodologique</h1>
+    <p><strong>1. Lecons :</strong> Selectionnez l'acte via les onglets, lisez les analyses scene par scene, puis cliquez sur "Evaluation" en bas de chaque fiche.</p>
+    <p><strong>2. Vocabulaire Theatre :</strong> Consultez les 3 categories de vocabulaire, puis passez le QCM de chaque categorie.</p>
+    <p><strong>3. QCM :</strong> Choisissez l'acte ou la categorie, repondez aux 10 questions. La correction s'affiche apres chaque reponse.</p>
+    <p><strong>4. Moyenne :</strong> Consultez votre progression complete. Les QCM de Vocabulaire Theatre sont inclus dans la moyenne generale.</p>
+    <hr style="margin:20px 0;border-color:var(--bdr)">
+    <h3>Structure de la piece</h3>
+    <p><strong>Acte I</strong> (5 scenes) -- L'Exposition<br>
+    <strong>Acte II</strong> (5 scenes) -- Les Reseaux de l'usure<br>
+    <strong>Acte III</strong> (9 scenes) -- Le Banquet de l'hypocrisie<br>
+    <strong>Acte IV</strong> (7 scenes) -- La Catastrophe de la cassette<br>
+    <strong>Acte V</strong> (6 scenes) -- Le Denouement</p>
+    <h3 style="margin-top:20px">Vocabulaire Theatre</h3>
+    <p><strong>Categorie 1</strong> -- Les parties du theatre (10 questions)<br>
+    <strong>Categorie 2</strong> -- Le vocabulaire du theatre (10 questions)<br>
+    <strong>Categorie 3</strong> -- Les types de comique (10 questions)</p>
+  </div>
+
+  </div>
+  <script>
+  
+  const DB={
+1:{t:"Acte I",s:"L'Exposition des desirs contrairies",su:"La mise en place des amours secretes de Cleante et d'Elise face a la tyrannie economique d'Harpagon.",n:5,sc:{
+1:{t:"Valere et Elise - L'amour sous la contrainte",c:"Valere supplie Elise de ne pas douter de lui. Il lui rappelle qu'il lui a sauve la vie six mois plus tot en la tirant de la noyade, et qu'il a pris un service chez Harpagon sous un faux nom pour rester aupres d'elle. Elise s'inquiete : son pere, obsede par l'argent, n'acceptera jamais leur union. Valere lui conseille la seule strategie possible : la flatterie systematique et calculee.",q:"Il faut que vous me fassiez la grace de me donner un peu d'espoir -- Valere",a:"Cette scene d'exposition installe l'opposition fondamentale : l'amour sincere contre la tyrannie de l'argent. Valere adopte l'hypocrisie comme arme de survie. Moliere pose une question ethique : peut-on tromper un tyran sans perdre sa dignite morale ?"},
+2:{t:"Cleante et Elise - Solidarite fraternelle",c:"Les deux enfants se confient leurs amours respectifs. Cleante aime Mariane, jeune fille pauvre mais vertueuse. Elise aime Valere. Tous deux denoncent l'avarice paternelle. L'ironie tragique s'installe : Cleante ignore encore que son pere convoite lui aussi Mariane.",q:"N'avez-vous point de honte, ma soeur, d'etre attachee a un homme comme cela ? -- Cleante",a:"Scene de confidence symetrique qui etablit la solidarite des jeunes contre la vieillesse avare. L'ironie dramatique - le spectateur comprend avant Cleante que pere et fils aiment la meme femme - annonce le comique douloureux de l'acte III."},
+3:{t:"Harpagon et La Fleche - La Paranoia en scene",c:"Premiere apparition d'Harpagon. Il chasse La Fleche avec une paranoia furieuse, le fouille, l'accuse sans preuves. Dans son agitation, il revele malgre lui qu'il a enterre dix mille ecus dans son jardin.",q:"Je veux que tu aies les yeux en Argus, partout ou tu seras. -- Harpagon",a:"La premiere scene d'Harpagon sert de portrait-charge. La paranoia se manifeste dans l'hyper-controle de l'espace domestique et le lapsus revelateur sur la cassette. Moliere transforme la surveillance en ressort comique : l'avare denonce son secret en voulant le proteger."},
+4:{t:"Harpagon, Cleante, Elise - Les Projets matrimoniaux",c:"Harpagon reunit ses enfants pour annoncer ses projets : Cleante epousera une riche veuve, Elise epousera Anselme, vieillard sans dot a verser. Quant a lui-meme, il epousera la jeune Mariane - la bien-aimee de son propre fils.",q:"Votre interet n'est pas mon affaire ; et c'est avec mon bien que je vous marie. -- Harpagon",a:"Cette scene constitue le noeud central de l'exposition. L'avarice atteint sa dimension la plus destructrice : elle transforme le pere en concurrent amoureux de son fils et en bourreau economique de sa fille."},
+5:{t:"Harpagon, Valere, Elise - L'Hypocrisie necessaire",c:"Valere feint d'approuver les projets du maitre contre Elise. Elise se sent trahie jusqu'a ce qu'elle comprenne la strategie de son amant. Harpagon, ravi du soutien, tient Valere pour un homme de grande sagesse.",q:"Non, vous avez raison, Monsieur, j'avais tort. -- Valere (se reprenant)",a:"Valere incarne l'hypocrite par contrainte. Moliere montre que le regne de l'avarice corrompt le langage lui-meme : la verite devient impossible a dire, remplacee par une rhetorique de survie."}
+}},
+2:{t:"Acte II",s:"Les Reseaux de l'usure et la flatterie",su:"L'exploration des reseaux financiers interlopes, le choc des vices economiques.",n:5,sc:{
+1:{t:"Cleante et La Fleche - Le Memoire de l'usurier",c:"La Fleche expose a Cleante les conditions usuraires dictees par un preteur anonyme via Maitre Simon. Pour obtenir 15 000 francs, Cleante doit accepter un taux exorbitant et un inventaire absurde de vieilles nippes estimees a 3 000 francs.",q:"C'est une usure bien manifeste, et l'on ne peut rien voir de plus criminel que les conditions rigoureuses de ce pret. -- La Fleche",a:"Moliere signe une scene documentaire sur la criminalite financiere sous Louis XIV. Il denonce la rapacite bourgeoise et montre la detresse de la jeunesse, prise au piege de l'asphyxie financiere familiale."},
+2:{t:"Harpagon, Cleante, Maitre Simon - Le Quiproquo du pret",c:"Maitre Simon organise la rencontre entre preteur et emprunteur, ignorant qu'ils sont pere et fils. Le coup de theatre eclate : Cleante decouvre avec horreur que l'usurier est son pere.",q:"Comment, pendard ! c'est toi qui t'abandonnes a de telles extremites ? -- Harpagon",a:"Cette confrontation detruit l'autorite morale de la figure paternelle. Le vice de l'avarice dissout instantanement le respect filial."},
+3:{t:"Harpagon et Frosine - La Paranoia interrompue",c:"Frosine arrive pour son rapport sur les negociations avec Mariane. L'echange est brutalement interrompu par un bruit suspect au jardin : ronge par la paranoia, Harpagon abandonne la scene.",q:"Je vais revenir dans le moment. -- Harpagon",a:"La folie de la possession agit comme un parasite dramatique : elle hache le rythme des scenes et demontre l'incapacite d'Harpagon a maintenir une interaction sociale sans etre rappele par sa pulsion fetichiste."},
+4:{t:"Frosine et La Fleche - Le Portrait de l'Avare",c:"La Fleche previent Frosine de l'inutilite de ses demarches. Il dresse le portrait d'un homme totalement hermetique a la generosite, chez qui le mot 'donner' declenche une reelle crise d'angoisse.",q:"Le seigneur Harpagon est de tous les humains l'humain le moins humain. -- La Fleche",a:"L'antithese 'l'humain le moins humain' souligne la deshumanisation provoquee par l'avarice. Harpagon est decrit comme une machine a stocker, depouille de toute empathie."},
+5:{t:"Harpagon et Frosine - La Flatterie et ses limites",c:"Frosine deploie tout son genie : elle vante la vigueur d'Harpagon, lui predit de vivre jusqu'a cent vingt ans. Mais des qu'elle demande de l'argent, Harpagon simule une surdite soudaine et s'esquive.",q:"Je veux aller voir mon carrosse qu'on apprete pour mener Mariane a la foire. -- Harpagon",a:"Moliere demontre les limites de la flatterie. L'avarice l'emporte sur le desir amoureux des que l'argent est menace."}
+}},
+3:{t:"Acte III",s:"Le Banquet de l'hypocrisie",su:"La preparation miserable du souper revele l'avarice dans sa dimension domestique.",n:9,sc:{
+1:{t:"Harpagon et les domestiques - Les Instructions du souper",c:"Harpagon reunit ses domestiques pour organiser le repas destine a Mariane. Ses instructions sont d'une avarice grotesque : rationner la nourriture, emprunter la vaisselle aux voisins, maquiller la misere.",q:"Il faudra mettre huit assiettes de chaque cote... mais l'on pourra se passer d'un bon nombre. -- Harpagon",a:"La satire domestique de l'avarice. Harpagon tente de projeter une image de seigneur tout en depensant le minimum absolu. L'ecart comique entre l'apparence voulue et la realite sordide est maximal."},
+2:{t:"Harpagon et Maitre Jacques - La Veste tournee",c:"Maitre Jacques cumule fonctions de cocher et de cuisinier. En tant que cocher, il denonce l'etat miserable des chevaux affames. Chaque verite dite lui vaut des coups. La veste retournee devient la metaphore visuelle de l'obligation d'hypocrisie.",q:"Puisque vous le voulez, monsieur, je vous dirai franchement que l'on se moque partout de vous. -- Maitre Jacques",a:"Maitre Jacques incarne l'honnetete naive systematiquement punie. Sa veste qu'il retourne est l'une des trouvailles visuelles les plus fortes de Moliere : l'hypocrisie est litteralement un costume que l'on enfile pour survivre."},
+3:{t:"Harpagon et Valere - L'Art de la flatterie reussie",c:"Valere reussit parfaitement sa flatterie d'Harpagon sur ses choix culinaires. Harpagon, enchante, le considere comme un homme de grande sagesse.",q:"Voila ce que c'est que de consulter un homme raisonnable. -- Harpagon",a:"Le contraste avec la scene 2 est delibere : la flatterie calculee de Valere est recompensee la ou l'honnetete de Maitre Jacques est punie."},
+4:{t:"Harpagon, Mariane, Frosine, Elise - La Premiere Rencontre",c:"Harpagon rencontre officiellement Mariane. Celle-ci decouvre avec horreur que son futur epoux impose est le pere de son bien-aime. Harpagon, grotesquement galant, tente des compliments maladroits.",q:"Il faut excuser, ma belle, les fautes d'un pere qui ne connait que l'amour de son argent. -- Frosine (a part)",a:"La scene de reconnaissance tragico-comique. L'horreur de Mariane - devoir sourire a l'homme dont elle va etre l'epouse forcee alors qu'elle aime son fils - est le point de tension maximal entre comedie et douleur."},
+5:{t:"Cleante, Mariane, Harpagon - La Bague forcee",c:"Cleante, profitant de la presence de Mariane, lui offre le bouquet d'Harpagon puis retire de son propre doigt la bague du pere pour la donner a la jeune fille. Harpagon, contraint de sourire devant ses invites, ne peut recuperer ses biens.",q:"Permettez-moi, Madame, de vous offrir cette bague de la part de mon pere. -- Cleante",a:"Coup de genie dramatique : Cleante utilise les biens du pere pour seduire la promise du pere. La generosite forcee d'Harpagon - oblige de laisser faire sous peine de se ridiculiser - represente sa torture supreme."},
+6:{t:"Harpagon et Cleante - Declaration de guerre",c:"Apres le depart des invites, Harpagon confronte Cleante en tete-a-tete. Il lui reproche d'avoir dilapide ses biens. Cleante declare ouvertement son amour pour Mariane et refuse de renoncer.",q:"Tu as la hardiesse de te mettre en concurrence avec moi ! -- Harpagon",a:"La scene transforme le pere en rival amoureux declare. L'avarice a si profondement altere Harpagon qu'il percoit son fils comme un concurrent economique plutot que comme son heritier legitime."},
+7:{t:"Maitre Jacques, Harpagon, Cleante - L'Hypocrite reconciliateur",c:"Maitre Jacques tente de reconcilier pere et fils par des mensonges de bonne volonte. Mais quand les deux se retrouvent, les mensonges s'effondrent et Maitre Jacques est battu une nouvelle fois. Il jure de se venger.",q:"C'est lui qui a commence a me provoquer. -- Maitre Jacques",a:"Maitre Jacques cristallise le paradoxe moral : honnetete et mensonge sont egalement punis. Sa promesse de vengeance annonce la denonciation de l'acte V."},
+8:{t:"Harpagon et Valere - La Frugalite erigee en vertu",c:"Valere flatte Harpagon une nouvelle fois sur sa gestion du souper. Harpagon accepte les compliments et se convainc que la frugalite extreme est une vertu aristocratique.",q:"La frugalite est la mere de toutes les vertus. -- Harpagon",a:"Moliere montre comment l'avarice se legitime a elle-meme par un discours moral. Harpagon ne se voit pas comme un avare : il se percoit comme un sage."},
+9:{t:"Maitre Jacques seul - La Vengeance preparee",c:"Seul en scene, Maitre Jacques se plaint de la cruaute de son traitement. Il medite sur sa vengeance contre Valere. Ce bref monologue est la graine dramatique qui levera a l'acte V.",q:"Je me souviendrai de tout cela. -- Maitre Jacques",a:"Courte mais decisive, cette scene prepare le mecanisme de l'acte V. La vengeance naive de Maitre Jacques se transformera en denonciation mensongere contre Valere."}
+}},
+4:{t:"Acte IV",s:"La Catastrophe de la cassette",su:"La decouverte du vol de la cassette declenche la plus grande crise de la piece.",n:7,sc:{
+1:{t:"Cleante, Mariane, Elise, Frosine - L'Alliance des victimes",c:"Les jeunes gens forment une alliance. Cleante declare son amour a Mariane. Elise soutient son frere. Frosine propose de trouver une fausse riche heritiere pour distraire Harpagon de Mariane.",q:"Je vous aime, Mariane, et rien ne pourra jamais effacer cette verite. -- Cleante",a:"Moliere compose la scene de l'espoir avant la catastrophe. L'alliance des jeunes contre le vieillard avare est la reponse collective a la tyrannie individuelle."},
+2:{t:"Harpagon et Cleante - L'Ultimatum",c:"Harpagon donne un ultimatum : renoncer a Mariane ou etre deserite et chasse. Cleante repond par la declaration la plus revolutionnaire : il renonce a l'heritage et choisit l'amour.",q:"Je ne veux point avoir de bien de vous ; j'aime mieux etre pauvre avec Mariane que riche avec une autre. -- Cleante",a:"Le rejet symbolique de l'heritage par Cleante est un acte profondement subversif. Il affirme que l'amour a plus de valeur que le patrimoine - l'exact inverse de la philosophie d'Harpagon."},
+3:{t:"La Fleche et Cleante - La Cassette volee",c:"La Fleche revele a Cleante qu'il a derobe la cassette d'or enterree dans le jardin. Cette cassette est desormais entre les mains du fils. Le rapport de force vient de se renverser totalement.",q:"Voila, monsieur, votre tresor. -- La Fleche",a:"La justice poetique s'accomplit : l'avare est depouille par sa propre obsession. Moliere montre que le vice porte en lui sa propre punition."},
+4:{t:"Harpagon seul - Le Monologue de la folie",c:"Harpagon decouvre le vol de sa cassette. Dans le monologue le plus celebre de la piece, il crie 'Au voleur ! Au meurtre !', accuse tout le monde y compris lui-meme, s'agrippe le bras croyant attraper le voleur, s'adresse au public.",q:"Au voleur ! Au voleur ! A l'assassin ! Au meurtrier ! Justice, juste Ciel ! Je suis perdu, je suis assassine. -- Harpagon",a:"Le chef-d'oeuvre de la comedie pathetique de Moliere. L'avarice portee a son point de rupture : la perte de l'or est vecue comme une mort. Le monologue explore les frontieres entre le comique et le tragique."},
+5:{t:"Harpagon et Maitre Jacques - La Fausse Accusation",c:"Maitre Jacques saisit l'occasion pour se venger de Valere. Interroge sur le voleur possible, il designe faussement Valere. Harpagon, aveugle par la douleur et la fureur, croit tout ce qu'on lui dit.",q:"C'est Valere qui vous a pris votre argent. -- Maitre Jacques",a:"La vengeance naive de Maitre Jacques declenche involontairement le quiproquo final. Moliere montre que la naivete et la rancune, alliees, peuvent produire des effets plus devastateurs que la malice deliberee."},
+6:{t:"Harpagon, Valere, Elise - Le Grand Quiproquo",c:"Valere, arrete et accuse, croit qu'on lui reproche son amour pour Elise. Il plaide cette cause avec passion. Harpagon croit qu'il avoue le vol de la cassette. Chaque replique de Valere renforce la conviction erronee d'Harpagon.",q:"Oui, monsieur, il est vrai que j'ai fait une faute, mais apres tout, ma faute est pardonnable. -- Valere (parlant d'Elise)",a:"Le quiproquo comme revelateur de verite. En croyant parler du vol, Valere revele son amour pour Elise - une verite que personne n'avait encore dite en face d'Harpagon."},
+7:{t:"Harpagon, Valere, Anselme - La Revelation d'identite",c:"Valere, pousse a bout, revele sa veritable identite : il est fils du seigneur Thomas d'Alburci, noble napolitain, dont toute la famille a ete dispersee par un naufrage seize ans plus tot.",q:"Je suis fils du seigneur Thomas d'Alburci, dont toute la famille a peri dans un naufrage. -- Valere",a:"L'amorce de la cascade de reconnaissances de l'acte V. Moliere active le mecanisme de la comedie de reconnaissance : les identites perdues se revelent, les familles dispersees se retrouvent."}
+}},
+5:{t:"Acte V",s:"Le Denouement et les reconnaissances",su:"La cascade des reconnaissances denoue tous les fils.",n:6,sc:{
+1:{t:"Harpagon et le Commissaire - La Procedure absurde",c:"Harpagon engage un commissaire pour enqueter sur le vol. L'interrogatoire kafkaien qui s'ensuit, avec ses formules juridiques grotesques et son inefficacite totale, tourne la procedure judiciaire en derision.",q:"Je veux faire pendre tout le monde ; et si je ne retrouve mon argent, je me pendrai moi-meme apres. -- Harpagon",a:"Moliere ridiculise les institutions judiciaires de son epoque en les montrant impuissantes face a la passion d'un avare."},
+2:{t:"Harpagon, Maitre Jacques, Commissaire - L'Interrogatoire",c:"Maitre Jacques maintient ses accusations contre Valere. Sans realiser la portee de ses mensonges, il invente des details, se contredit. Le clerc note tout scrupuleusement.",q:"Il avait les yeux rouges et le col rouge, et la mine d'un scelerot. -- Maitre Jacques (inventant)",a:"Le mensonge de Maitre Jacques, ne d'une rancune triviale, se transforme en deposition judiciaire officielle. Moliere denonce la fragilite d'une justice fondee sur les temoignages non verifies."},
+3:{t:"Harpagon et Valere - Le Quiproquo resolu",c:"Valere developpe sa defense de son amour pour Elise, tandis qu'Harpagon continue de croire entendre l'aveu du vol. Puis la verite eclate. Harpagon veut sanctionner doublement Valere.",q:"Je suis pret a tout pour Elise, et je ne me repens de rien. -- Valere",a:"La resolution du quiproquo installe une nouvelle tension. La revelation d'identite noble de Valere commence a changer la donne."},
+4:{t:"Anselme revele - La Grande Reconnaissance",c:"Le coup de theatre central : Anselme revele qu'il est en realite le seigneur Thomas d'Alburci, pere de Valere ET de Mariane. Les deux couples se trouvent libres de s'unir.",q:"Ciel, quelle est ma surprise ! Valere, mon fils ! Mariane, ma fille ! -- Anselme",a:"Le grand coup de theatre de la reconnaissance. Anselme represente le pere bienveillant et providentiel - l'exact oppose d'Harpagon, le pere destructeur."},
+5:{t:"Le Denouement collectif - Negociation finale",c:"Tous les personnages sont reunis. Anselme offre de prendre en charge les frais des deux mariages. Cleante negocie avec son pere : il rendra la cassette en echange du consentement pour son union avec Mariane.",q:"Vous aurez votre cassette ; mais je veux que vous donniez votre consentement a mon mariage. -- Cleante",a:"Moliere refuse le happy ending moral conventionnel. Harpagon ne se repent pas. Les mariages sont conclus non par amour paternel, mais parce que quelqu'un d'autre paye."},
+6:{t:"La Cloture - Harpagon et sa cassette",c:"La piece se ferme sur la joie d'Harpagon retrouvant sa cassette. Pendant que ses enfants se marient et qu'Anselme retrouve sa famille, Harpagon ne songe qu'a sa cassette.",q:"Et moi, voir ma chere cassette. -- Harpagon",a:"La morale finale de Moliere est sans ambiguite : le vice ne se corrige pas, il se contourne. L'avarice est presentee comme une pathologie incurable. Harpagon est le seul personnage de la piece qui ne change pas."}
+}}
+};
+
+
+  const ACTS=[
+{id:1,lbl:"Acte I",s:"L'Exposition des desirs contrairies",n:5},
+{id:2,lbl:"Acte II",s:"Les Reseaux de l'usure",n:5},
+{id:3,lbl:"Acte III",s:"Le Banquet de l'hypocrisie",n:9},
+{id:4,lbl:"Acte IV",s:"La Catastrophe de la cassette",n:7},
+{id:5,lbl:"Acte V",s:"Le Denouement et les reconnaissances",n:6}
+];
+
+
+  const QDB={
+"1-1":[
+{q:"Pour quelle raison Valere s'est-il fait engager chez Harpagon ?",a:"Pour voler sa cassette",b:"Pour rester aupres d'Elise qu'il aime",c:"Pour fuir ses creanciers",r:"b",e:"Valere a pris service chez Harpagon sous un faux nom uniquement pour rester proche d'Elise."},
+{q:"Comment Valere et Elise se sont-ils rencontres ?",a:"Lors d'un bal masque",b:"Valere a sauve Elise de la noyade",c:"Par l'intermediaire de Frosine",r:"b",e:"Valere a tire Elise d'un naufrage, a l'origine de leur amour."},
+{q:"Depuis combien de temps Valere est-il au service d'Harpagon ?",a:"Deux ans",b:"Six mois",c:"Quelques semaines",r:"b",e:"Valere indique qu'il sert Harpagon depuis environ six mois."},
+{q:"Quelle strategie Valere preconise-t-il pour amadouer Harpagon ?",a:"La franchise absolue",b:"La flatterie systematique et calculee",c:"La corruption par l'argent",r:"b",e:"Valere est convaincu que la flatterie est le seul langage qu'Harpagon comprend."},
+{q:"Quelle est la principale crainte d'Elise ?",a:"Que Valere soit un voleur",b:"Que son pere refuse leur union par avarice",c:"Que Valere reparte en mer",r:"b",e:"Elise sait que son pere n'accordera jamais sa main a un homme sans fortune."},
+{q:"Quelle valeur Valere defend-il pour justifier son hypocrisie ?",a:"L'honnetete coute que coute",b:"La fin justifie les moyens quand on aime",c:"La prudence financiere",r:"b",e:"Valere presente la flatterie non comme un vice mais comme une necessite dictee par l'amour."},
+{q:"Qui est Valere en realite selon les revelations ulterieures ?",a:"Un marchand venitien",b:"Le fils du seigneur Thomas d'Alburci",c:"Le neveu d'Anselme",r:"b",e:"Valere est le fils du seigneur Thomas d'Alburci, comme il le revelera a l'acte IV."},
+{q:"Quel est le role dramaturgique de la scene I.1 ?",a:"Introduire Harpagon des le debut",b:"Exposer les amours contrairies et l'obstacle paternel",c:"Presenter l'intrigue financiere",r:"b",e:"La scene I.1 pose les donnees amoureuses de la piece et la tyrannie d'Harpagon comme obstacle central."},
+{q:"Quel type d'amour Valere defend-il ?",a:"Un amour de convenance sociale",b:"Un amour sincere, desinteresse, fonde sur le sauvetage",c:"Un amour calcule sur l'heritage",r:"b",e:"Valere a risque sa vie pour Elise sans savoir qui elle etait : son amour est etranger a tout calcul financier."},
+{q:"Quelle figure rhethorique domine le discours de Valere sur la flatterie ?",a:"La litote",b:"Le paradoxe moral - l'hypocrisie presentee comme vertu",c:"L'ironie tragique",r:"b",e:"Valere retourne le sens moral de la flatterie en la presentant comme un outil au service du bien."}
+],
+"1-2":[
+{q:"Qui est Mariane selon Cleante dans la scene I.2 ?",a:"Une riche heritiere inconnue",b:"Une jeune fille pauvre et vertueuse dont il est amoureux",c:"La fille d'Anselme",r:"b",e:"Cleante decrit Mariane comme une jeune personne sans fortune mais d'une grande vertu."},
+{q:"De qui Elise est-elle amoureuse ?",a:"De Maitre Jacques",b:"De Valere, l'intendant de son pere",c:"D'un jeune noble inconnu",r:"b",e:"Elise revele a Cleante qu'elle aime Valere, qui sert leur pere sous un faux nom."},
+{q:"Quelle est la reaction de Cleante quand il apprend l'amour de sa soeur ?",a:"Il la blame severement",b:"Il est surpris mais solidaire",c:"Il est indifferent",r:"b",e:"Cleante comprend car il vit la meme chose : tous deux aiment contre la volonte paternelle."},
+{q:"Pourquoi Cleante ne peut-il pas subvenir aux besoins de Mariane ?",a:"Il est crible de dettes de jeu",b:"Son pere lui refuse tout argent par avarice",c:"Il depense tout en vetements",r:"b",e:"L'avarice d'Harpagon prive ses enfants de tout moyen financier."},
+{q:"Quelle ironie dramatique Moliere construit-il dans la scene I.2 ?",a:"Elise aime secretement Cleante",b:"Cleante ignore que son pere convoite aussi Mariane",c:"Mariane est deja mariee",r:"b",e:"Le spectateur pressent que pere et fils vont se retrouver en rivalite amoureuse."},
+{q:"Que symbolise la misere de Mariane et de sa mere ?",a:"La punition divine des familles deshonnorees",b:"Les dommages collateraux de l'avarice sur les innocents",c:"La decadence de la noblesse",r:"b",e:"Moliere montre que l'avarice d'Harpagon ne punit pas seulement ses enfants mais aussi des victimes exterieures."},
+{q:"Quelle decision commune prennent Cleante et Elise ?",a:"Fuir ensemble a l'etranger",b:"S'entraider mutuellement et resister a leur pere",c:"Demander l'aide de Frosine",r:"b",e:"La solidarite fraternelle s'etablit : ils promettent de se soutenir contre les projets paternels."},
+{q:"Quel theme central cette scene illustre-t-elle ?",a:"Le conflit entre argent et amour",b:"L'hypocrisie des domestiques",c:"La comedie de moeurs judiciaire",r:"a",e:"La scene I.2 pose l'antagonisme structural : les desirs amoureux des jeunes contre la tyrannie financiere du pere."},
+{q:"Comment Cleante decrit-il sa situation financiere ?",a:"Il dispose d'une petite rente secrete",b:"Il est entierement dependant de son pere qui lui refuse tout",c:"Il a un emploi mais un salaire insuffisant",r:"b",e:"Cleante est dans un denument total impose par l'avarice paternelle."},
+{q:"Quel registre dramatique domine la scene I.2 ?",a:"La farce burlesque",b:"La confidence plaintive et le comique de situation",c:"La tragedie sentimentale",r:"b",e:"La scene oscille entre la plainte sincere des deux enfants et l'ironie dramatique construite pour le spectateur."}
+],
+"1-3":[
+{q:"Que fait Harpagon a La Fleche des le debut de la scene I.3 ?",a:"Il le complimente sur son travail",b:"Il le fouille et l'accuse de vol sans preuve",c:"Il lui confie un secret",r:"b",e:"Harpagon fouille La Fleche par pure paranoia, sans aucune preuve de mefait."},
+{q:"Quelle information cruciale Harpagon revele-t-il malgre lui ?",a:"L'identite de l'usurier",b:"L'existence de sa cassette de dix mille ecus enterree au jardin",c:"Les projets de mariage de Cleante",r:"b",e:"En voulant proteger son secret, Harpagon le revele lui-meme."},
+{q:"Quelle est la somme thesaurisee par Harpagon dans sa cassette ?",a:"5 000 livres",b:"10 000 ecus",c:"50 000 francs",r:"b",e:"La cassette contient 10 000 ecus en or, somme colossale gardee enterree dans le jardin."},
+{q:"Pourquoi Harpagon se mefie-t-il de La Fleche ?",a:"La Fleche a deja vole une fois",b:"Il se mefie de tout le monde sans raison precise",c:"La Fleche est un espion de Cleante",r:"b",e:"La paranoia d'Harpagon est universelle : il soupçonne chaque domestique sans distinction."},
+{q:"Quelle figure de style caracterise le comportement d'Harpagon ?",a:"L'ironie socratique",b:"L'hyperbole comique de la mefiance paranoiaque",c:"La metaphore filee",r:"b",e:"Moliere pousse la mefiance d'Harpagon jusqu'a l'absurde pour en faire un ressort comique."},
+{q:"Quelle est la reaction de La Fleche face aux accusations ?",a:"Il avoue tout immediatement",b:"Il proteste et denonce l'injustice de la mefiance",c:"Il fuit sans repondre",r:"b",e:"La Fleche defend son honneur mais finit par partir, conscient qu'il est impossible de raisonner Harpagon."},
+{q:"Quel trouble psychologique Moliere illustre-t-il chez Harpagon ?",a:"La megalomanie",b:"La paranoia obsessionnelle liee a l'avarice",c:"La melancolie amoureuse",r:"b",e:"Harpagon vit dans la terreur permanente du vol."},
+{q:"Quel aspect de la relation maitre-valet cette scene illustre-t-elle ?",a:"La complicite affectueuse",b:"La tyrannie du maitre qui prive le valet de confiance et de dignite",c:"L'egalite sociale",r:"b",e:"Harpagon traite La Fleche comme un suspect permanent, detruisant toute relation normale de service."},
+{q:"En quoi cette scene est-elle fondamentale pour la structure dramatique ?",a:"Elle annonce le denouement final",b:"Elle revele la cassette, enjeu central de toute la piece",c:"Elle presente Mariane pour la premiere fois",r:"b",e:"Sans la revelation de la cassette ici, le vol de l'acte IV et le chantage de Cleante n'auraient aucun fondement."},
+{q:"Quel rapport Harpagon entretient-il avec le langage ?",a:"Il parle avec eloquence et precision",b:"Il se trahit lui-meme par ses lapsus paranoiaques",c:"Il se tait le plus possible",r:"b",e:"La manie d'Harpagon l'amene a reveler ce qu'il veut cacher : son obsession le prive de controle sur ses propres mots."}
+],
+"1-4":[
+{q:"Quel projet matrimonial Harpagon annonce-t-il pour Cleante ?",a:"Epouser Mariane",b:"Epouser une riche veuve qu'il ne connait pas",c:"Rester celibataire",r:"b",e:"Harpagon a trouve une riche veuve pour Cleante, sans consulter ce dernier."},
+{q:"Quel epoux Harpagon destine-t-il a sa fille Elise ?",a:"Valere",b:"Anselme, un vieillard riche qui n'exige pas de dot",c:"Maitre Jacques",r:"b",e:"Harpagon choisit Anselme precisement parce qu'il accepte Elise sans dot."},
+{q:"Quel projet matrimonial Harpagon annonce-t-il pour lui-meme ?",a:"Rester veuf pour economiser",b:"Epouser la jeune Mariane, dont son fils est amoureux",c:"Epouser Frosine",r:"b",e:"Harpagon revele qu'il a l'intention d'epouser Mariane - la femme aimee de Cleante."},
+{q:"Quelle est la reaction de Cleante a ces annonces ?",a:"Il accepte par respect filial",b:"Il refuse categoriquement et s'emporte",c:"Il feint d'accepter",r:"b",e:"Cleante n'accepte ni la veuve imposee ni la rivalite de son pere pour Mariane."},
+{q:"Quelle est la reaction d'Elise face au projet de mariage avec Anselme ?",a:"Elle est enchantee par la richesse d'Anselme",b:"Elle refuse categoriquement",c:"Elle s'evanouit",r:"b",e:"Elise refuse Anselme : elle aime Valere et n'entend pas sacrifier son bonheur."},
+{q:"Pourquoi Harpagon choisit-il Anselme pour sa fille ?",a:"Anselme est noble et celebre",b:"Anselme accepte le mariage sans dot, ce qui permet a Harpagon de ne rien debourser",c:"Anselme est un ami de longue date",r:"b",e:"Le critere unique d'Harpagon est financier : zero depense pour le mariage de sa fille."},
+{q:"En quoi Harpagon est-il doublement coupable ?",a:"Il ment a ses enfants et triche aux cartes",b:"Il prive ses enfants de dot et entre en concurrence amoureuse avec son fils",c:"Il vole et menace",r:"b",e:"L'avarice d'Harpagon prend ici sa forme la plus monstrueuse : il sacrifie le bonheur de ses enfants ET rivalise avec son fils."},
+{q:"Quelle figure paternelle Harpagon incarne-t-il ?",a:"Le pere absent et indifferent",b:"Le pere tyrannique qui instrumentalise ses enfants comme actifs economiques",c:"Le pere violent",r:"b",e:"Harpagon reduit ses enfants a leur valeur marchande."},
+{q:"Quel type de comique domine la scene I.4 ?",a:"Le comique de gestes",b:"Le comique de caractere pousse jusqu'au scandale moral",c:"Le comique de langage",r:"b",e:"La scene provoque le rire mais aussi l'indignation : les projets d'Harpagon sont comiquement absurdes et moralement revoltants."},
+{q:"Quelle formule d'Harpagon resume sa philosophie parentale ?",a:"Mes enfants sont ma plus grande richesse",b:"C'est avec mon bien que je vous marie, non avec le votre",c:"L'amour est plus precieux que l'or",r:"b",e:"Harpagon indique clairement que le mariage de ses enfants est une transaction economique, pas un acte d'amour."}
+],
+"1-5":[
+{q:"Quel role Valere joue-t-il dans la scene I.5 face a Harpagon ?",a:"Il defend Elise ouvertement",b:"Il feint d'approuver Harpagon contre Elise pour gagner sa confiance",c:"Il reste neutre",r:"b",e:"Valere soutient publiquement Harpagon contre Elise tout en lui faisant comprendre discretement sa strategie."},
+{q:"Comment Elise reagit-elle quand Valere semble la trahir ?",a:"Elle s'en va furieuse",b:"Elle se sent trahie avant de comprendre la strategie de Valere",c:"Elle pleure",r:"b",e:"Elise vit un moment de detresse avant de comprendre que la flatterie de Valere est un outil, non une trahison."},
+{q:"Quelle est la reaction d'Harpagon face au soutien de Valere ?",a:"Il se mefie de son zele",b:"Il est enchante et considere Valere comme un homme de grande sagesse",c:"Il est indifferent",r:"b",e:"Harpagon est instantanement seduit par quiconque valide ses decisions."},
+{q:"Quelle verite sur Harpagon la scene revele-t-elle ?",a:"Il est capable de generosite cachee",b:"Il ne resiste pas a la flatterie : qui le loue obtient tout",c:"Il aime sincerement ses enfants",r:"b",e:"La reaction d'Harpagon a Valere confirme la these : la flatterie est la cle pour influencer le tyran."},
+{q:"Quelle figure de rhetorique Valere utilise-t-il dans son revirement ?",a:"L'antiphrase",b:"La correction feinte : il commence a s'opposer puis se reprend",c:"L'ironie directe",r:"b",e:"Valere simule une reflexion qui le fait changer d'avis pour faire paraitre son approbation finale plus sincere."},
+{q:"En quoi cette scene illustre-t-elle la flatterie comme arme politique ?",a:"Elle montre que la flatterie est toujours malveillante",b:"Elle montre que la flatterie peut servir des fins nobles contre la tyrannie",c:"Elle condamne Valere comme personnage vil",r:"b",e:"Valere flatte Harpagon non par vice mais pour proteger Elise - Moliere nuance ainsi la morale de la flatterie."},
+{q:"Quelle question ethique Moliere pose-t-il dans cette scene ?",a:"L'argent est-il la source de tous les maux ?",b:"L'hypocrisie est-elle justifiable quand elle sert l'amour et la justice ?",c:"Le mariage doit-il etre fonde sur la raison ou le sentiment ?",r:"b",e:"La flatterie de Valere n'est pas simplement comique : elle interroge la morale en situation de tyrannie."},
+{q:"Comment la scene I.5 se distingue-t-elle de la scene III.2 ?",a:"Elle est plus triste",b:"Valere reussit la ou Maitre Jacques echoue car il dit ce qu'Harpagon veut entendre",c:"Elle se passe dans un autre lieu",r:"b",e:"La comparaison illustre la lecon centrale : chez Harpagon, la flatterie reussit, l'honnetete est punie."},
+{q:"Quelle est la fonction dramaturgique de cette scene ?",a:"Exposer un nouveau personnage",b:"Confirmer la strategie de survie de Valere et clore l'exposition sur une note d'espoir ambigu",c:"Resoudre le conflit principal",r:"b",e:"La scene I.5 laisse entendre qu'Elise et Valere ont un plan viable."},
+{q:"Que revele le comportement d'Harpagon envers Valere sur sa psychologie ?",a:"Il est capable d'amitie sincere",b:"Il n'accorde sa confiance qu'a ceux qui le flattent - son ego est sa vulnerabilite principale",c:"Il est mefiant envers tout le monde sans exception",r:"b",e:"La mefiance universelle d'Harpagon s'arrete des qu'on le flatte : son narcissisme le rend manipulable."}
+],
+"2-1":[
+{q:"Quelle est la somme exacte demandee par Cleante ?",a:"10 000 ecus",b:"15 000 francs",c:"5 000 louis d'or",r:"b",e:"Cleante passe par La Fleche pour emprunter exactement 15 000 francs."},
+{q:"Qui sert d'intermediaire officiel pour ce pret clandestin ?",a:"Frosine",b:"Maitre Simon",c:"Maitre Jacques",r:"b",e:"Maitre Simon est le courtier qui fait le lien entre l'usurier et l'emprunteur."},
+{q:"Quelle condition exorbitante s'ajoute au taux d'interet ?",a:"Epouser la fille de l'usurier",b:"Prendre un lot de vieilles nippes estime a 3 000 francs",c:"Donner un carrosse en gage",r:"b",e:"Le preteur force l'emprunteur a accepter des vieux objets inutiles surevalues."},
+{q:"Quelle est la reaction de La Fleche face au memoire de conditions ?",a:"Il le trouve raisonnable",b:"Il denonce une usure criminelle et manifeste",c:"Il conseille de fuir a l'etranger",r:"b",e:"La Fleche percoit immediatement la malhonnetete structurelle du contrat."},
+{q:"Qui est le preteur selon Maitre Simon ?",a:"Un jeune noble gerant son heritage",b:"Un homme d'affaires qui ne veut pas qu'on sache son nom",c:"Une caisse royale de pret",r:"b",e:"L'usurier exige de rester anonyme pour masquer ses activites illegales."},
+{q:"Quel objet insolite NE fait PAS partie de l'inventaire du pret ?",a:"Un lit de brocard de soie pourpre",b:"Un luth de Bologne garni de ses cordes",c:"Un navire de guerre miniature",r:"c",e:"Le lit et le luth font bien partie des vieilles affaires imposees, pas le navire."},
+{q:"Quel defaut Cleante reproche-t-il a son pere ?",a:"La violence physique",b:"L'epargne rigoureuse qui asphyxie ses enfants",c:"Son absence repetee",r:"b",e:"L'avarice paternelle force les enfants a emprunter chez des criminels pour vivre decemment."},
+{q:"Pourquoi Cleante accepte-t-il des conditions aussi destructrices ?",a:"Il a un besoin pressant d'argent pour soutenir Mariane",b:"Il veut acheter un nouveau cheval",c:"Il a une dette de jeu",r:"a",e:"Son amour pour Mariane et la misere dans laquelle elle vit le poussent au desespoir financier."},
+{q:"Quel aspect historique du XVIIe siecle Moliere documente-t-il ici ?",a:"La crise de la noblesse d'epee",b:"Les reseaux d'usure clandestine de la bourgeoisie",c:"L'impot de la gabelle",r:"b",e:"Moliere depeint fidelement les montages financiers illegaux tres repandus sous Louis XIV."},
+{q:"Quelle figure de style caracterise le catalogue d'objets de Maitre Simon ?",a:"L'accumulation comique",b:"La metaphore poetique",c:"L'euphemisme",r:"a",e:"L'enumeration sans fin de vieux objets inutiles cree un comique d'accumulation irresistible."}
+],
+"2-2":[
+{q:"Quel quiproquo eclate au debut de la scene II.2 ?",a:"Harpagon croit que Cleante veut le voler",b:"Maitre Simon reunit sans le savoir un pere usurier et son fils emprunteur",c:"La Fleche se trompe de maison",r:"b",e:"Maitre Simon pensait reunir deux inconnus et fait se rencontrer le pere et le fils."},
+{q:"Quelle insulte Harpagon lance-t-il a son fils ?",a:"Traitre !",b:"Pendard !",c:"Vaurien !",r:"b",e:"Harpagon utilise l'injure classique Pendard ! pour exprimer sa colere."},
+{q:"De quoi Harpagon accuse-t-il Cleante ?",a:"De vouloir l'assassiner",b:"De se ruiner par des emprunts criminels et anticipes",c:"De negliger ses etudes",r:"b",e:"Il lui reproche de dissiper le patrimoine familial avant l'heure."},
+{q:"Quelle est la replique de Cleante face aux accusations ?",a:"Il s'excuse a genoux",b:"Il lui reproche de s'enrichir par des usures infames",c:"Il feint l'evanouissement",r:"b",e:"Cleante retourne l'accusation en denoncant le commerce honteux de son pere."},
+{q:"Que fait Maitre Simon quand il comprend la situation ?",a:"Il appelle la garde",b:"Il s'enfuit prudemment de la scene",c:"Il demande une double commission",r:"b",e:"Le courtier s'eclipse pour ne pas subir les eclats de la fureur familiale."},
+{q:"Quelle valeur sacree est pietinee dans cette confrontation ?",a:"Le secret professionnel",b:"L'autorite morale de la paternite",c:"La courtoisie mondaine",r:"b",e:"Le vice transforme le pere en bourreau et detruit le respect filial."},
+{q:"Quelle est l'attitude de La Fleche a la fin de cette altercation ?",a:"Il console Cleante",b:"Il observe avec ironie ce choc des vices",c:"Il demissionne",r:"b",e:"La Fleche observe avec une ironie mordante ce choc des vices pere-fils."},
+{q:"Qui est le plus coupable selon la morale de la scene ?",a:"Le fils qui emprunte par necessite",b:"Le pere qui prete a un taux criminel pour s'enrichir",c:"Le courtier Simon",r:"b",e:"L'avarice d'Harpagon est presentee comme le vice le plus destructeur et immoral."},
+{q:"Quel type de comique domine la confrontation ?",a:"Un comique de situation et de moeurs particulierement grincant",b:"De la pure bouffonnerie de foire",c:"De la tragedie pure",r:"a",e:"Le comique nait de l'indignite partagee et de l'inversion des roles."},
+{q:"Harpagon exprime-t-il du remords pour ses activites d'usurier ?",a:"Oui, il promet d'arreter",b:"Non, il ne pense qu'au scandale de la prodigalite de son fils",c:"Il rejette la faute sur La Fleche",r:"b",e:"La conscience d'Harpagon est totalement anesthesiee par l'amour du gain."}
+],
+"2-3":[
+{q:"Quel est le role de Frosine aupres d'Harpagon ?",a:"Cuisiniere en chef",b:"Entremetteuse matrimoniale",c:"Avocate d'affaires",r:"b",e:"Frosine est engagee pour negocier le mariage avec Mariane."},
+{q:"Pourquoi la discussion entre Harpagon et Frosine s'interrompt-elle ?",a:"Frosine se met a pleurer",b:"Harpagon entend un bruit suspect au jardin",c:"Une alarme sonne",r:"b",e:"La paranoia d'Harpagon le rappelle immediatement a l'ordre au moindre bruit."},
+{q:"Ou se trouve le tresor d'Harpagon ?",a:"Dans un coffre a la cave",b:"Dans une cassette enterree au jardin",c:"Derriere un faux tableau",r:"b",e:"Harpagon a dissimule ses 10 000 ecus sous terre dans sa propriete."},
+{q:"Quel trouble psychologique caracterise Harpagon dans cette scene ?",a:"La mythomanie",b:"La paranoia obsessionnelle",c:"La melancolie",r:"b",e:"Il vit dans la terreur permanente d'etre observe et depouille."},
+{q:"Comment la folie d'Harpagon influence-t-elle le rythme de la piece ?",a:"Elle ralentit l'action par de longs monologues",b:"Elle hache la structure des scenes par des entrees et sorties impromptues",c:"Elle n'a aucun impact",r:"b",e:"Ses departs precipites coupent court a la progression dramatique normale."},
+{q:"Que pense Harpagon en quittant la scene ?",a:"Qu'on est en train de deterrer son argent",b:"Qu'il a oublie de fermer les ecuries",c:"Que Frosine lui ment",r:"a",e:"Chaque bruit est pour lui le signal d'un vol imminent."},
+{q:"Frosine est-elle surprise par le comportement d'Harpagon ?",a:"Oui, elle le croit fou",b:"Non, elle connait son profil et s'apprete a l'exploiter",c:"Elle s'enfuit en courant",r:"b",e:"Frosine sait exactement a qui elle a affaire et prepare ses flatteries."},
+{q:"Quelle somme contient la cassette d'Harpagon ?",a:"5 000 francs",b:"10 000 ecus",c:"50 000 ecus",r:"b",e:"La cassette contient l'equivalent de 10 000 ecus d'or."},
+{q:"Harpagon privilegia dans cette scene :",a:"Ses amours futures",b:"La securite absolue de son capital fetiche",c:"Les relations sociales",r:"b",e:"L'argent passe avant absolument tout le reste, y compris la politesse."},
+{q:"Quel mecanisme comique Moliere exploite-t-il ?",a:"Le comique de caractere lie a la monomanie",b:"Le quiproquo linguistique",c:"La parodie heroique",r:"a",e:"La folie du personnage cree une situation absurde et comique."}
+],
+"2-4":[
+{q:"Quelle formule celebre La Fleche utilise-t-il pour definir Harpagon ?",a:"Le loup de la maisonnee",b:"L'humain le moins humain",c:"Le roi des avares",r:"b",e:"Il utilise cette antithese pour marquer la deshumanisation du maitre."},
+{q:"Selon La Fleche, quel effet le mot donner produit-il sur Harpagon ?",a:"Il le fait rire",b:"Il lui donne des convulsions de souffrance",c:"Il le rend genereux",r:"b",e:"L'idee meme de se separer d'un bien provoque chez lui une douleur physique."},
+{q:"Quelle expression Harpagon prefere-t-il a Je vous donne le bonjour ?",a:"Je vous souhaite le bonjour",b:"Je vous prete le bonjour",c:"Salut a vous",r:"b",e:"L'Avare pousse le vice jusqu'a bannir le verbe donner de son vocabulaire."},
+{q:"Comment La Fleche decrit-il la secheresse d'Harpagon ?",a:"Comme une maladie de peau",b:"Comme une absence totale de pitie et de sensibilite",c:"Comme un manque d'education",r:"b",e:"L'avarice a desseche tout sentiment d'humanite chez le vieillard."},
+{q:"De quoi La Fleche previent-il Frosine ?",a:"Qu'elle ne tirera jamais d'argent de cet homme",b:"Qu'Harpagon est violent",c:"Qu'il va l'epouser",r:"a",e:"Le valet previent que les tentatives de soutirer des fonds a l'Avare sont vaines."},
+{q:"Quelle figure de style emploie principalement La Fleche ?",a:"L'hyperbole chirurgicale",b:"L'euphemisme attenuateur",c:"L'allegorie mythologique",r:"a",e:"Les exagerations frappantes accentuent le trait monstrueux du personnage."},
+{q:"Comment est qualifie le comportement d'Harpagon envers son entourage ?",a:"Protecteur mais maladroit",b:"D'une durete absolue et sans faille",c:"Indifferent",r:"b",e:"Il tyrannise et prive tout le monde pour economiser le moindre centime."},
+{q:"Quelle est l'utilite dramatique de cette scene II.4 ?",a:"Preparer le public au grand affrontement en posant le cadre psychologique",b:"Faire passer le temps",c:"Introduire un nouveau personnage",r:"a",e:"Le portrait theorique fait par le valet annonce la demonstration pratique qui va suivre."},
+{q:"Selon le texte, qu'est-ce qu'Harpagon aime plus que sa propre reputation ?",a:"Ses enfants",b:"Ses pieces d'or",c:"Son carrosse",r:"b",e:"L'or est son unique et veritable divinite."},
+{q:"Le portrait fait par La Fleche presente l'avarice comme :",a:"Un simple defaut passager",b:"Une alteration totale et monstrueuse de la nature humaine",c:"Une qualite de gestionnaire",r:"b",e:"Moliere montre que le vice pousse l'homme en dehors des regles de l'humanite."}
+],
+"2-5":[
+{q:"Quel argument flatteur Frosine utilise-t-elle sur le physique d'Harpagon ?",a:"Qu'il a l'air d'un jeune homme de vingt ans",b:"Qu'il degage une sante de fer et porte magnifiquement son age",c:"Qu'il a de beaux cheveux",r:"b",e:"Elle flatte sa vieillesse en la faisant passer pour un signe de robustesse immortelle."},
+{q:"Quelle longevite extraordinaire Frosine predit-elle a Harpagon ?",a:"80 ans",b:"Plus de 120 ans",c:"100 ans pile",r:"b",e:"Elle pousse l'hyperbole jusqu'a lui promettre de vivre au moins jusqu'a 120 ans."},
+{q:"Selon Frosine, quel type d'homme Mariane prefere-t-elle ?",a:"Les jeunes cavaliers sveltes",b:"Les vieillards d'un age venerable portant des besicles",c:"Les militaires",r:"b",e:"Frosine invente ce mensonge pour rassurer Harpagon sur ses chances de seduction."},
+{q:"Comment Frosine constitue-t-elle la dot de Mariane ?",a:"En comptant l'argent cache de sa mere",b:"En calculant l'economie realisee par sa sobriete et son absence de coquetterie",c:"En inventant un heritage lointain",r:"b",e:"C'est une dot virtuelle : ne rien depenser equivaut selon elle a apporter de l'or."},
+{q:"Quelle requete personnelle Frosine formule-t-elle a la fin ?",a:"Une augmentation de salaire",b:"Une aide financiere pour un proces urgent",c:"L'autorisation de se marier",r:"b",e:"Elle tente de monnayer son art en demandant un appui pecuniaire."},
+{q:"Quelle est la reaction immediate d'Harpagon quand Frosine demande de l'argent ?",a:"Il se met en colere et hurle",b:"Il simule une surdite soudaine et change de sujet",c:"Il lui accorde un pret avec interet",r:"b",e:"L'Avare se ferme instantanement et feint de ne plus entendre les sollicitations."},
+{q:"Quel pretexte Harpagon utilise-t-il pour s'enfuir de la scene ?",a:"Il doit aller nourrir ses chevaux",b:"Il doit inspecter son carrosse pour mener Mariane a la foire",c:"Il a rendez-vous avec le commissaire",r:"b",e:"Il prend l'excuse des preparatifs du carrosse pour rompre la conversation."},
+{q:"Quel sentiment anime Frosine apres le depart d'Harpagon ?",a:"La pitie",b:"Une profonde frustration et un desir de vengeance",c:"La joie",r:"b",e:"Humiliee de n'avoir rien obtenu, elle jure de faire echouer les plans de l'Avare."},
+{q:"Quelle verite psychologique cette scene demontre-t-elle ?",a:"Le narcissisme cede toujours devant l'instinct de conservation monetaire",b:"L'amour rend l'Avare genereux",c:"Frosine est plus forte que l'argent",r:"a",e:"La flatterie fonctionne pour l'orgueil, mais s'arrete net des que le portefeuille est menace."},
+{q:"Quel est le but final de Moliere a travers ce denouement de scene ?",a:"Montrer l'effondrement de l'echange social provoque par le vice",b:"Faire l'eloge du carrosse",c:"Amuser la galerie avec des grimaces",r:"a",e:"L'avarice detruit tout lien de reciprocite, meme avec ceux qui vous servent."}
+],
+"3-1":[
+{q:"Quel est l'objectif d'Harpagon en reunissant ses domestiques ?",a:"Les congedier pour economiser",b:"Organiser un repas de reception tout en depensant le minimum absolu",c:"Les interroger sur un vol",r:"b",e:"Harpagon veut recevoir Mariane en paraissant genereux tout en ne deboursant rien."},
+{q:"Quelle solution Harpagon propose-t-il pour la vaisselle ?",a:"Acheter de la belle vaisselle en argent",b:"Emprunter la vaisselle aux voisins",c:"Utiliser de la vaisselle en bois",r:"b",e:"Harpagon ordonne d'emprunter la vaisselle chez des voisins."},
+{q:"Quelle est l'instruction sur la quantite de nourriture ?",a:"Mettre le double pour paraitre genereux",b:"Rationner severement - peu de plats mais bien presentes",c:"Servir un seul plat de soupe",r:"b",e:"Harpagon tient a la fois a paraitre bien et a depenser le moins possible."},
+{q:"Quel domestique recoit des instructions sur la facon de servir les vins ?",a:"La Fleche",b:"Brindavoine",c:"Maitre Jacques",r:"b",e:"Brindavoine recoit des consignes pour ne servir du vin que lorsque les invites ont vraiment soif."},
+{q:"Que symbolise le repas organise par Harpagon ?",a:"La generosite de l'avare quand il est amoureux",b:"L'imposture sociale : feindre le luxe pour masquer la misere",c:"La tradition culinaire francaise",r:"b",e:"Le repas est la metaphore de toute la piece : Harpagon joue un role qu'il ne peut pas payer."},
+{q:"Quelle figure de style domine les instructions d'Harpagon ?",a:"La metaphore gastronomique",b:"L'oxymore : etre avare en paraissant genereux",c:"L'hyperbole culinaire",r:"b",e:"L'oxymore depenser sans depenser est la contradiction fondamentale des instructions d'Harpagon."},
+{q:"Comment Harpagon aborde-t-il la question des bougies ?",a:"Il commande des lustres grandioses",b:"Il ordonne d'allumer le moins de bougies possible",c:"Il laisse la salle dans le noir",r:"b",e:"Meme l'eclairage est compte : Harpagon prefere ses invites dans la penombre."},
+{q:"Quel domestique est charge de la cuisine ?",a:"La Merluche",b:"Maitre Jacques",c:"Valere",r:"b",e:"Maitre Jacques cumule les fonctions de cuisinier et de cocher."},
+{q:"En quoi les instructions d'Harpagon sont-elles comiquement contradictoires ?",a:"Il veut un festin mais interdit de cuisiner",b:"Il veut paraitre riche mais ses ordres trahissent sa pingerie a chaque detail",c:"Il veut inviter Mariane mais refuse qu'elle mange",r:"b",e:"Chaque instruction revele l'obsession d'economiser, rendant illusoire la pretention a recevoir royalement."},
+{q:"Quelle impression le spectateur emporte-t-il de cette scene ?",a:"Harpagon est un hote genereux malgre ses defauts",b:"Le repas a venir sera un fiasco masque par les apparences",c:"Les domestiques apprecient Harpagon",r:"b",e:"Moliere prepare le decor d'une soiree vouee a l'imposture, microcosme de toute la comedie sociale de l'avarice."}
+],
+"3-2":[
+{q:"Quelles sont les deux fonctions que Maitre Jacques cumule ?",a:"Valet et comptable",b:"Cuisinier et cocher",c:"Jardinier et intendant",r:"b",e:"Maitre Jacques est a la fois cuisinier et cocher, ce cumul provoque des conflits comiques."},
+{q:"Que revele Maitre Jacques en tant que cocher sur l'etat des chevaux ?",a:"Que les chevaux sont en parfaite sante",b:"Que les chevaux sont affames et dans un etat lamentable",c:"Qu'il y a trop de chevaux",r:"b",e:"Harpagon prive meme ses chevaux de nourriture suffisante par souci d'economie."},
+{q:"Quelle est la reaction d'Harpagon quand Maitre Jacques dit la verite ?",a:"Il le recompense pour son honnetete",b:"Il le frappe et le punit",c:"Il l'ecoute et prend note",r:"b",e:"Harpagon ne supporte pas la verite quand elle implique de depenser."},
+{q:"Quel est le symbole dramatique le plus celebre de cette scene ?",a:"Le cheval affame",b:"La veste retournee de Maitre Jacques",c:"Le fouet d'Harpagon",r:"b",e:"Maitre Jacques retourne sa veste pour passer de cocher a cuisinier - metaphore de la double contrainte."},
+{q:"Quelle lecon Maitre Jacques tire-t-il de cette experience ?",a:"L'honnetete est toujours recompensee",b:"Chez Harpagon, la flatterie protege mieux que la verite",c:"Il faut fuir les mauvais maitres",r:"b",e:"Battu pour avoir dit la verite, Maitre Jacques comprend qu'il vaut mieux mentir pour survivre."},
+{q:"Quelle verite Maitre Jacques dit-il sur le repas prevu ?",a:"Que le repas sera magnifique",b:"Que le repas sera trop pauvre pour etre servi sans honte",c:"Que les invites ne viendront pas",r:"b",e:"Maitre Jacques decrit la triste realite d'un repas qui fera honte a la maison."},
+{q:"Comment Moliere utilise-t-il Maitre Jacques d'un point de vue thematique ?",a:"Comme personnage comique sans profondeur",b:"Comme incarnation de l'honnetete naive systematiquement punie par la tyrannie",c:"Comme rival d'Harpagon",r:"b",e:"Maitre Jacques est la victime exemplaire du regime de l'avarice : sa franchise est son seul tort."},
+{q:"Quelle est la signification de la veste retournee ?",a:"Un simple effet de costume comique",b:"Une metaphore visuelle de l'hypocrisie obligatoire dans l'entourage d'Harpagon",c:"Un symbole de la pauvrete des domestiques",r:"b",e:"La veste retournee est l'image la plus forte de la piece sur l'obligation de jouer des roles contradictoires."},
+{q:"Pourquoi Moliere fait-il revenir Maitre Jacques dans plusieurs scenes cles ?",a:"Pour varier les personnages comiques",b:"Pour illustrer comment l'honnetete conduit a la ruine dans ce monde",c:"Parce qu'il est le plus sympathique",r:"b",e:"Le parcours de Maitre Jacques - battu, manipule, condamne - est le contrepoint tragique a la comedie d'Harpagon."},
+{q:"Quelle emotion complexe Moliere provoque-t-il avec cette scene ?",a:"La pure hilarite sans retenue",b:"Le rire mele de malaise devant l'injustice physique subie par un honnete homme",c:"L'ennui devant un vaudeville repetitif",r:"b",e:"Voir un homme battu pour avoir dit la verite cree un rire amer - Moliere explore la cruaute comique."}
+],
+"3-3":[
+{q:"Que fait Valere dans la scene III.3 ?",a:"Il reproche sa pingerie a Harpagon",b:"Il le flatte sur ses choix de repas et sa gestion domestique",c:"Il lui annonce une mauvaise nouvelle",r:"b",e:"Valere approuve avec enthousiasme toutes les decisions culinaires d'Harpagon."},
+{q:"Quelle est la reaction d'Harpagon face aux flatteries de Valere ?",a:"Il se mefie de leur exces",b:"Il est enchante et conforte dans ses choix",c:"Il reste indifferent",r:"b",e:"Harpagon accepte volontiers les compliments et confirme ses dispositions economes."},
+{q:"En quoi la scene III.3 contraste-t-elle avec la scene III.2 ?",a:"Elle se passe dans un autre lieu",b:"Valere reussit en flattant la ou Maitre Jacques a ete battu pour avoir dit la verite",c:"Elle presente d'autres personnages",r:"b",e:"Le contraste delibere illustre la lecon centrale : chez Harpagon, la flatterie est une vertu et la verite un vice."},
+{q:"Quelle formule Harpagon prononce-t-il sur la frugalite ?",a:"L'argent est la cle du bonheur",b:"La frugalite est la mere de toutes les vertus",c:"Manger peu, c'est vivre longtemps",r:"b",e:"Harpagon erige sa pingerie en philosophie morale grace au renfort de Valere."},
+{q:"Que revele cette scene sur la psychologie d'Harpagon ?",a:"Qu'il est capable de remise en question",b:"Qu'il construit une vision du monde qui legitime son vice comme vertu",c:"Qu'il apprecie reellement la cuisine",r:"b",e:"Harpagon ne se voit pas comme un avare : il se croit sage, econome et vertueux."},
+{q:"Quel est le role de Valere dans ce systeme de flatterie ?",a:"Il dupe Harpagon involontairement",b:"Il alimente deliberement l'auto-illusion d'Harpagon pour rester en grace",c:"Il critique Harpagon indirectement",r:"b",e:"Valere exploite la vanite d'Harpagon pour maintenir son acces a la maison et a Elise."},
+{q:"La brievete de la scene III.3 a-t-elle une fonction dramaturgique ?",a:"Non, c'est une scene de remplissage",b:"Oui, elle illustre rapidement que la flatterie fonctionne a chaque tentative",c:"Elle permet de changer de decor",r:"b",e:"La scene courte mais percutante installe un contrepoint efficace a la longue scene de Maitre Jacques."},
+{q:"Que signifie le fait qu'Harpagon remercie Valere pour son soutien ?",a:"Il a de bonnes manieres",b:"Sa vanite le rend aveugle a toute manipulation",c:"Il sait que Valere ment mais est indulgent",r:"b",e:"L'avarice d'Harpagon s'accompagne d'un narcissisme qui le rend totalement manipulable."},
+{q:"Comment cette scene fait-elle avancer l'intrigue principale ?",a:"Elle revele un secret capital",b:"Elle renforce la position de Valere dans la maison",c:"Elle annonce la catastrophe a venir",r:"b",e:"Chaque flatterie reussie de Valere consolide son acces a Elise."},
+{q:"Quelle critique sociale Moliere formule-t-il dans cette courte scene ?",a:"La gastronomie francaise est surevaluee",b:"Une societe qui punit l'honnetete et recompense la flatterie est une societe corrompue",c:"Les domestiques sont malhonnetes",r:"b",e:"Moliere denonce un ordre moral inverse ou le mensonge prospere et la verite est punie."}
+],
+"3-4":[
+{q:"Qui rencontre officiellement qui pour la premiere fois dans la scene III.4 ?",a:"Cleante et Frosine",b:"Harpagon et Mariane",c:"Valere et Mariane",r:"b",e:"La scene organise la premiere rencontre officielle entre Harpagon et Mariane."},
+{q:"Quelle est la reaction de Mariane quand elle voit Harpagon ?",a:"Elle est agreablement surprise par son elegance",b:"Elle decouvre avec horreur l'identite de son futur epoux impose",c:"Elle est indifferente",r:"b",e:"Mariane, qui aime Cleante, realise que le vieux pere est celui qu'elle doit epouser."},
+{q:"Quelle dimension tragico-comique la situation de Mariane cree-t-elle ?",a:"Elle doit choisir entre deux vieillards",b:"Elle doit sourire a l'homme dont le fils est son amour",c:"Elle est trop jeune pour se marier",r:"b",e:"La situation de Mariane est a la fois comique (absurdite) et douloureuse (contrainte reelle)."},
+{q:"Comment Harpagon tente-t-il de seduire Mariane ?",a:"Avec des cadeaux somptueux",b:"Avec des compliments maladroits et une galanterie grotesque",c:"En lui chantant une serenade",r:"b",e:"Harpagon joue le galant malgre son age avance et son caractere peu seduisant, avec des effets comiques."},
+{q:"Quel est le role d'Elise dans cette scene ?",a:"Elle est absente",b:"Elle accueille Mariane en jouant la comedie de la bienveillance",c:"Elle pleure ouvertement",r:"b",e:"Elise doit accueillir la rivale imposee a son frere avec un sourire force."},
+{q:"Que represente Mariane dans la structure morale de la piece ?",a:"La ruse et l'interet",b:"La jeunesse vertueuse et pauvre ecrasee par la tyrannie economique",c:"L'aristocratie condescendante",r:"b",e:"Mariane incarne toutes les victimes innocentes de l'avarice - belle, pauvre, vertueuse et contrainte."},
+{q:"Comment Frosine gere-t-elle la rencontre ?",a:"Elle laisse les deux se debrouiller seuls",b:"Elle facilite la rencontre tout en observant la reaction de Mariane",c:"Elle s'oppose a Harpagon",r:"b",e:"Frosine est la metteure en scene de la situation."},
+{q:"Quelle ironie narrative pese sur cette scene ?",a:"Que Mariane ne connait pas encore Cleante",b:"Qu'Harpagon courtise la femme aimee par son fils sans le savoir",c:"Que Frosine a trahi Mariane",r:"b",e:"L'ironie est maximale : Harpagon fait la cour devant sa future belle-fille sans comprendre la situation."},
+{q:"Quel registre comique Moliere utilise-t-il pour la galanterie d'Harpagon ?",a:"Le sublime romanesque",b:"Le comique de caractere : le vieux galant ridicule",c:"La farce avec coups de baton",r:"b",e:"Harpagon en galant est une figure comique classique : l'inadequation entre le personnage et le role."},
+{q:"En quoi la scene III.4 illustre-t-elle le theme des masques ?",a:"Tous les personnages portent des masques physiques",b:"Tous les personnages jouent un role social qui cache leur verite interieure",c:"Harpagon se deguise en jeune homme",r:"b",e:"Mariane sourit, Elise accueille, Harpagon seduit - tous jouent une comedie sociale imposee par les circonstances."}
+],
+"3-5":[
+{q:"Quel geste provocateur Cleante fait-il en presence de son pere ?",a:"Il insulte Harpagon devant Mariane",b:"Il offre a Mariane le bouquet et la bague de son pere",c:"Il quitte la salle en signe de protestation",r:"b",e:"Cleante s'empare du bouquet et de la bague destines par Harpagon a Mariane pour les lui offrir lui-meme."},
+{q:"Pourquoi Harpagon ne peut-il pas reprendre ses biens ?",a:"Il ne les voit pas",b:"Reclamer sa bague devant ses invites le ferait passer pour un avare honteux",c:"Parce qu'il les a oublies",r:"b",e:"Harpagon est piege : recuperer ses biens en public serait humiliant."},
+{q:"Quelle est la reaction d'Harpagon ?",a:"Il rit de bon coeur",b:"Il est furieux mais doit se contenir et sourire devant les invites",c:"Il s'evanouit",r:"b",e:"Harpagon subit sa torture supreme : la generosite forcee."},
+{q:"Quel est le sens symbolique du geste de Cleante ?",a:"Il veut la ruine financiere de son pere",b:"Il utilise les biens du pere pour seduire la femme du pere - renversement de la logique patriarcale",c:"Il fait un cadeau d'amitie",r:"b",e:"Cleante s'approprie symboliquement la propriete paternelle au service de l'amour."},
+{q:"Comment Mariane reagit-elle aux attentions de Cleante ?",a:"Elle est offensee par son impudence",b:"Elle est emue par sa generosite courageuse",c:"Elle reste indifferente",r:"b",e:"Mariane, qui aime Cleante, vit ce moment comme une preuve d'amour sous contrainte."},
+{q:"Quel type de conflit cette scene dramatise-t-elle ?",a:"Un conflit de generations sur la mode vestimentaire",b:"La guerre entre desir amoureux, entre pere et fils pour la meme femme",c:"Un conflit financier sur l'heritage",r:"b",e:"La scene met en scene la rivalite amoureuse pere-fils dans toute sa dimension grotesque et douloureuse."},
+{q:"En quoi le geste de la bague est-il particulierement symbolique ?",a:"La bague est un bijou de grande valeur",b:"La bague, symbole matrimonial, est offerte par Cleante - Harpagon fiancait involontairement Mariane a son fils",c:"Harpagon avait vole cette bague",r:"b",e:"Moliere choisit la bague pour maximiser l'ironie : le symbole meme du mariage echappe a Harpagon."},
+{q:"Comment la scene prepare-t-elle la confrontation suivante ?",a:"Elle ne la prepare pas",b:"Elle porte la tension pere-fils au seuil du point de rupture",c:"Elle resout le conflit",r:"b",e:"La generosite forcee d'Harpagon en public va exploser en confrontation privee dans la scene III.6."},
+{q:"Que revele cette scene sur la strategie de Cleante ?",a:"Qu'il est imprudent et irreflechi",b:"Qu'il a compris que son pere est plus vulnerable en public qu'en prive",c:"Qu'il veut reconcilier tout le monde",r:"b",e:"Cleante exploite intelligemment le regard social comme contrainte sur son pere."},
+{q:"Quel registre Moliere utilise-t-il pour cette confrontation indirecte ?",a:"La tragedie pure",b:"Le comique de situation double d'une cruaute sous-jacente",c:"La farce burlesque",r:"b",e:"La scene est comique (Harpagon impuissant) mais cruelle (il est humilie devant la femme qu'il veut seduire)."}
+],
+"3-6":[
+{q:"Quel est le ton de la scene III.6 entre Harpagon et Cleante ?",a:"Conciliant et affectueux",b:"Un affrontement brutal et direct apres la chute des masques",c:"Humoristique et leger",r:"b",e:"Une fois les invites partis, pere et fils abandonnent la comedie sociale et entrent dans une confrontation ouverte."},
+{q:"De quoi Harpagon accuse-t-il precisement Cleante ?",a:"D'avoir vole sa cassette",b:"D'avoir dilapide ses biens et de se mettre en concurrence amoureuse avec lui",c:"D'avoir insulte Mariane",r:"b",e:"Harpagon reproche a Cleante d'avoir utilise ses biens pour seduire Mariane et de lui faire concurrence."},
+{q:"Quelle est la declaration la plus forte de Cleante ?",a:"Il jure de quitter la France",b:"Il declare ouvertement aimer Mariane et refuser d'y renoncer",c:"Il insulte son pere publiquement",r:"b",e:"Cleante assume son amour pour Mariane et le defend contre les pretentions de son pere."},
+{q:"Quelle image de la paternite cette scene produit-elle ?",a:"Le pere comme guide bienveillant",b:"Le pere comme rival amoureux grotesque et tyrannique",c:"Le pere comme figure distante",r:"b",e:"Harpagon, en competition amoureuse avec son fils, efface toute dimension paternelle de sa relation a Cleante."},
+{q:"Quel ultimatum Harpagon pose-t-il ?",a:"Travailler pour rembourser ses dettes",b:"Renoncer a Mariane ou perdre tout espoir d'heritage",c:"Quitter la maison immediatement",r:"b",e:"Harpagon utilise l'arme de l'heritage - sa seule forme d'autorite - pour imposer sa volonte."},
+{q:"Comment Cleante repond-il a la menace de deseritage ?",a:"Il se soumet par peur de la pauvrete",b:"Il rejette l'heritage et choisit l'amour sur la fortune",c:"Il negocie un compromis",r:"b",e:"Cleante dit preferer etre pauvre avec Mariane que riche avec une autre."},
+{q:"Quelle valeur Cleante incarne-t-il en rejetant l'heritage ?",a:"L'imprudence juvenile",b:"La primaute de l'amour sur l'argent - l'exact inverse de la philosophie paternelle",c:"L'ingratitude filiale",r:"b",e:"Cleante incarne le jeune heros romantique de la comedie classique qui choisit le sentiment contre la raison economique."},
+{q:"En quoi cette scene est-elle un tournant dans la piece ?",a:"Elle resout tous les problemes",b:"Elle marque la rupture totale et irreversible entre pere et fils",c:"Elle introduit un personnage nouveau",r:"b",e:"Apres cette scene, il n'y a plus de dialogue possible entre Harpagon et Cleante."},
+{q:"Quelle figure de style caracterise les repliques de Cleante ?",a:"La litote et l'euphemisme",b:"L'antithese : amour vs argent, pauvrete vs richesse, liberte vs servitude",c:"La metaphore gastronomique",r:"b",e:"Cleante structure ses repliques autour d'oppositions binaires qui resument le conflit central de la piece."},
+{q:"Quelle est la valeur dramaturgique de cette confrontation ?",a:"Elle ralentit l'action",b:"Elle accelere la crise vers le point de non-retour qui menera au vol de la cassette",c:"Elle conclut l'intrigue principale",r:"b",e:"La rupture pere-fils rend logique et inevitable le vol de la cassette par La Fleche au nom de Cleante."}
+],
+"3-7":[
+{q:"Quel role Maitre Jacques tente-t-il de jouer dans la scene III.7 ?",a:"Delateur",b:"Mediateur et reconciliateur entre pere et fils",c:"Arbitre juridique",r:"b",e:"Maitre Jacques essaie de reconcilier Harpagon et Cleante par des mensonges de bonne volonte."},
+{q:"Quelle technique Maitre Jacques emploie-t-il ?",a:"La violence physique",b:"Il dit a chacun separement que l'autre est pret a capituler",c:"Il revele leurs secrets respectifs",r:"b",e:"Maitre Jacques ment aux deux parties en leur faisant croire que l'autre a cede."},
+{q:"Que se passe-t-il quand pere et fils se retrouvent apres les interventions de Maitre Jacques ?",a:"Ils se reconcilient sincerement",b:"Les mensonges s'effondrent et la querelle reprend de plus belle",c:"Ils s'ignorent mutuellement",r:"b",e:"Quand les deux protagonistes comparent les versions de Maitre Jacques, les contradictions apparaissent."},
+{q:"Quelle est la consequence directe pour Maitre Jacques ?",a:"Il recoit une prime pour son service",b:"Il est a nouveau battu pour ses mensonges",c:"Il est renvoye",r:"b",e:"Maitre Jacques, pris en faute pour ses faux rapports, recoit une punition supplementaire."},
+{q:"Quelle lecon paradoxale la scene III.7 enseigne-t-elle ?",a:"Qu'il faut toujours dire la verite",b:"Que meme le mensonge bien intentionne est puni chez Harpagon",c:"Qu'il devrait chercher un autre emploi",r:"b",e:"Battu pour la verite (scene 2) et pour le mensonge (scene 7) : aucune sortie possible pour Maitre Jacques."},
+{q:"Quelle promesse Maitre Jacques fait-il a la fin de la scene ?",a:"De toujours flatter Harpagon",b:"De se venger de ceux qui le font battre, notamment Valere",c:"De quitter la maison",r:"b",e:"Humilie et en colere, Maitre Jacques jure de se venger de Valere."},
+{q:"Quelle figure comique Maitre Jacques incarne-t-il ?",a:"Le trickster qui manipule tout le monde",b:"Le bouc emissaire de bonne volonte que personne ne remercie",c:"Le sage conseiller",r:"b",e:"Maitre Jacques souffre pour avoir voulu le bien - Moliere en fait le personnage le plus pitoyable de la piece."},
+{q:"Comment cette scene prepare-t-elle l'acte IV ?",a:"Elle ne le prepare pas",b:"Elle plante la graine de vengeance qui poussera en fausse accusation contre Valere",c:"Elle resout la querelle pere-fils",r:"b",e:"La promesse de vengeance de Maitre Jacques menera a la denonciation mensongere de Valere a l'acte IV."},
+{q:"Quelle critique Moliere fait-il de la mediation ?",a:"Que la mediation est toujours efficace",b:"Que la mediation fondee sur le mensonge est condamnee a l'echec",c:"Que les conflits familiaux ne peuvent jamais etre resolus",r:"b",e:"Moliere montre qu'une reconciliation batie sur le faux ne peut durer."},
+{q:"En quoi Maitre Jacques est-il different des autres personnages ?",a:"Il est le seul a ne jamais mentir",b:"Il est le seul a subir des consequences physiques directes de ses actions",c:"Il est le seul personnage noble",r:"b",e:"Contrairement aux autres qui manipulent sans consequence immediate, Maitre Jacques paie physiquement ses erreurs."}
+],
+"3-8":[
+{q:"Que se passe-t-il entre Valere et Harpagon dans la scene III.8 ?",a:"Ils se disputent sur le repas",b:"Valere felicite Harpagon pour sa gestion du souper",c:"Valere revele son identite",r:"b",e:"Valere continue a flatter Harpagon sur ses choix culinaires."},
+{q:"Quel mecanisme psychologique Moliere met-il en scene ?",a:"La manipulation involontaire",b:"La flatterie comme outil de controle systematique d'un maitre vaniteux",c:"La peur comme facteur de soumission",r:"b",e:"Valere utilise de maniere consciente et methodique la flatterie pour maintenir la confiance d'Harpagon."},
+{q:"Que revele cette scene sur le portrait d'Harpagon ?",a:"Qu'il montre sa generosite cachee",b:"Que son ego est aussi vorace que son avarice est grande",c:"Qu'il revele ses remords",r:"b",e:"L'avidite de compliments d'Harpagon est le miroir de son avidite monetaire."},
+{q:"Pourquoi Moliere insere-t-il cette courte scene apres la longue dispute III.7 ?",a:"Pour ralentir le rythme dramatique",b:"Pour creer un contraste comique : apres la violence, le calme et la flatterie recompensee",c:"Pour introduire un nouveau personnage",r:"b",e:"La scene III.8 allege l'atmosphere tout en confirmant le fonctionnement du systeme."},
+{q:"Quel est le paradoxe de la relation Valere-Harpagon ?",a:"Valere est honnete et Harpagon l'apprecie pour cela",b:"Valere trompe Harpagon pour le bien d'Elise - l'affection est feinte d'un cote",c:"Harpagon se mefie de Valere mais l'utilise",r:"b",e:"Harpagon croit avoir un allie sincere alors que Valere n'est la que pour Elise."},
+{q:"Que pense Valere reellement de la cuisine d'Harpagon ?",a:"Qu'elle est excellente",b:"Qu'elle est honteuse - mais il ne peut le dire sans risquer sa position",c:"Il n'a pas d'opinion",r:"b",e:"Valere applique la lecon tiree de Maitre Jacques : la verite est impossible, seule la flatterie protege."},
+{q:"Quel theme de la piece cette scene illustre-t-elle ?",a:"Le conflit des generations",b:"La corruption du langage par l'avarice : personne ne peut plus dire la verite",c:"L'amour triomphant",r:"b",e:"Dans l'univers d'Harpagon, la verite est devenue un danger et le mensonge une norme."},
+{q:"En quoi Valere est-il plus habile que Frosine ?",a:"Il offre de l'argent la ou Frosine utilise des mots",b:"Il adapte ses flatteries aux obsessions precises d'Harpagon sur chaque sujet",c:"Valere est plus sincere que Frosine",r:"b",e:"Valere identifie precisement ce qu'Harpagon veut entendre sur chaque sujet."},
+{q:"Quelle est la duree dramatique typique des scenes de flatterie reussie ?",a:"Elles sont toujours tres longues et detaillees",b:"Elles sont breves - la flatterie efficace ne s'etire pas, elle frappe et part",c:"Elles durent autant que les scenes comiques",r:"b",e:"Moliere fait des scenes de flatterie reussie des moments courts et efficaces."},
+{q:"Quelle formule decrirait le mieux la relation Valere-Harpagon ?",a:"Une amitie sincere",b:"Une alliance asymetrique : l'un dupe l'autre pour le bien d'un tiers",c:"Une relation d'egal a egal",r:"b",e:"Valere maintient une facade de loyaute pour servir ses vrais interets - ceux d'Elise."}
+],
+"3-9":[
+{q:"Quel est le sentiment dominant de Maitre Jacques dans son monologue ?",a:"La satisfaction d'avoir bien travaille",b:"La rancoeur et le desir de vengeance contre Valere",c:"La resignation philosophique",r:"b",e:"Maitre Jacques est en colere contre Valere qu'il considere comme responsable de ses malheurs."},
+{q:"Contre qui Maitre Jacques dirige-t-il son ressentiment ?",a:"Harpagon",b:"Valere, qu'il accuse de lui avoir vole la faveur du maitre",c:"Cleante",r:"b",e:"Maitre Jacques rend Valere responsable de sa decheance."},
+{q:"Quelle promesse Maitre Jacques fait-il ?",a:"De quitter la maison d'Harpagon",b:"De se souvenir des offenses et de se venger au bon moment",c:"De ne plus jamais dire la verite",r:"b",e:"La vengeance de Maitre Jacques est annoncee avec une gravite comique."},
+{q:"Quelle fonction dramaturgique remplit ce court monologue ?",a:"Exposer les projets matrimoniaux d'Harpagon",b:"Preparer la fausse denonciation de Valere a l'acte IV-V",c:"Annoncer la fin de la piece",r:"b",e:"Ce monologue est la graine plantee qui germera en mensonge destructeur lors de l'enquete sur la cassette volee."},
+{q:"En quoi la vengeance de Maitre Jacques est-elle tragiquement inadaptee ?",a:"Il manque de courage",b:"Sa vengeance naive va declencher des consequences bien au-dela de ce qu'il imagine",c:"Il ne sait pas comment se venger",r:"b",e:"Maitre Jacques pense a une petite revanche personnelle, mais sa fausse accusation va declencher une catastrophe judiciaire."},
+{q:"Quel aspect du caractere de Maitre Jacques ce monologue revele-t-il ?",a:"Sa malveillance profonde",b:"Sa naivete melee d'une colere sincere contre l'injustice",c:"Sa cupidite",r:"b",e:"Maitre Jacques n'est pas malveillant - il est blesse et naif."},
+{q:"Quel rapport au temps Maitre Jacques exprime-t-il ?",a:"Il veut se venger immediatement",b:"Il attend patiemment le bon moment pour agir",c:"Il a deja renonce a se venger",r:"b",e:"La formule Je me souviendrai exprime une vengeance differee mais certaine."},
+{q:"Maitre Jacques est-il conscient des consequences ?",a:"Oui, il calcule tout",b:"Non, il ne voit que sa rancoeur immediate sans anticiper les effets de son plan",c:"Il anticipe et les accepte",r:"b",e:"La naivete de Maitre Jacques est totale : il ne pense qu'a se defouler."},
+{q:"Quel effet Moliere cree-t-il en finissant l'acte III sur ce monologue ?",a:"Un effet de cloture apaisante",b:"Un effet de suspension dramatique : une bombe a retardement vient d'etrearmee",c:"Un effet de resolution",r:"b",e:"L'acte III se ferme sur une promesse de vengeance naive qui annonce la catastrophe de l'acte IV."},
+{q:"Comment ce monologue s'inscrit-il dans le portrait general de Maitre Jacques ?",a:"Il revele un personnage calculateur et machiavellique",b:"Il confirme son caractere d'homme simple, honnete et blesse, victime chronique du systeme d'Harpagon",c:"Il le transforme en antagoniste principal",r:"b",e:"Maitre Jacques reste jusqu'au bout un personnage sympathique et pitoyable."}
+],
+"4-1":[
+{q:"Qui forme l'alliance au debut de la scene IV.1 ?",a:"Harpagon et Anselme",b:"Cleante, Mariane, Elise et Frosine",c:"Valere et La Fleche",r:"b",e:"Les jeunes victimes de l'avarice d'Harpagon s'unissent pour trouver une solution collective."},
+{q:"Que propose Frosine pour deslier les jeunes gens d'Harpagon ?",a:"Voler la cassette",b:"Trouver une fausse riche heritiere pour detourner l'attention d'Harpagon",c:"Partir en exil",r:"b",e:"Frosine propose de substituer une femme fictive a Mariane dans les plans d'Harpagon."},
+{q:"Quelle declaration Cleante fait-il a Mariane ?",a:"Il lui demande de fuir avec lui",b:"Il lui declare solennellement son amour et son engagement",c:"Il lui offre de l'argent",r:"b",e:"Cleante fait une declaration d'amour directe et sans detour a Mariane."},
+{q:"Comment Mariane reagit-elle a la declaration de Cleante ?",a:"Elle le repousse par peur d'Harpagon",b:"Elle avoue ses propres sentiments et espere une issue heureuse",c:"Elle reste silencieuse",r:"b",e:"Mariane reconnait aimer Cleante - la reciprocite de l'amour est confirmee."},
+{q:"Quelle est la position d'Elise dans cette alliance ?",a:"Elle s'y oppose par prudence",b:"Elle soutient pleinement son frere",c:"Elle est neutre",r:"b",e:"Elise, qui vit la meme situation avec Valere, est une alliee naturelle de son frere."},
+{q:"Que symbolise la formation de cette alliance ?",a:"La defaite de la jeunesse",b:"La resistance collective contre la tyrannie individuelle de l'avarice",c:"La victoire provisoire de l'argent",r:"b",e:"Moliere oppose le collectif des victimes solidaires a l'isolement pathologique de l'avare."},
+{q:"Quelle est la faiblesse du plan de Frosine ?",a:"Il est trop couteux",b:"Il depend de la credulite d'Harpagon et de la chance",c:"Il est illegal",r:"b",e:"Le plan de la fausse heritiere est ingenieux mais speculatif."},
+{q:"Quel sentiment Moliere genere-t-il chez le spectateur ?",a:"L'inquietude que les jeunes vont perdre",b:"L'espoir que la ruse et l'amour pourraient vaincre l'avarice",c:"L'ennui devant des complots qui n'aboutissent pas",r:"b",e:"La scene IV.1 est une respiration d'espoir avant la catastrophe du monologue d'Harpagon."},
+{q:"En quoi cette scene equilibre-t-elle la structure de l'acte IV ?",a:"Elle ne l'equilibre pas",b:"Elle installe l'espoir collectif avant la catastrophe solitaire d'Harpagon",c:"Elle ralentit l'action",r:"b",e:"Moliere construit l'acte IV comme un mouvement de l'espoir vers la catastrophe."},
+{q:"Quel theme central la scene IV.1 illustre-t-elle ?",a:"La trahison entre amis",b:"La solidarite comme seule reponse a la tyrannie",c:"Le pouvoir de l'argent",r:"b",e:"Face au mal solitaire de l'avarice, Moliere propose la vertu collective de la solidarite amoureuse."}
+],
+"4-2":[
+{q:"Quelle est la nature de la confrontation dans la scene IV.2 ?",a:"Une dispute a propos d'argent",b:"Un ultimatum final sur Mariane qui revele la rupture totale",c:"Une reconciliation avortee",r:"b",e:"La scene IV.2 est la grande confrontation finale sur Mariane - aucun des deux ne cede."},
+{q:"Quelle arme Harpagon utilise-t-il contre Cleante ?",a:"La menace physique",b:"La menace de deseritage",c:"La revelation de secrets compromettants",r:"b",e:"L'heritage est la seule arme d'Harpagon contre ses enfants."},
+{q:"Comment Cleante repond-il a la menace de deseritage ?",a:"Il cede par peur de la misere",b:"Il la rejette en declarant preferer etre pauvre avec Mariane que riche sans elle",c:"Il contre-menace d'appeler la police",r:"b",e:"Le rejet symbolique de l'heritage par Cleante est la transgression la plus radicale de la piece."},
+{q:"Quelle vision de l'amour Cleante oppose-t-il a Harpagon ?",a:"L'amour comme transaction avantageuse",b:"L'amour comme valeur absolue qui transcende l'argent",c:"L'amour comme devoir filial",r:"b",e:"Cleante incarne l'ideal romantique de la comedie classique."},
+{q:"Pourquoi Harpagon ne comprend-il pas le choix de Cleante ?",a:"Il est trop vieux pour comprendre l'amour",b:"Pour lui, refuser la fortune est une incongruite absolue",c:"Il croit que Cleante bluffe",r:"b",e:"L'avarice a rendu Harpagon incapable de concevoir qu'une valeur puisse etre superieure a l'argent."},
+{q:"A quel moment le dialogue tourne-t-il a la rupture totale ?",a:"Quand Harpagon frappe Cleante",b:"Quand aucun des deux n'accepte de ceder et que les masques tombent definitvement",c:"Quand Cleante revele le vol de la cassette",r:"b",e:"La scene atteint un point de non-retour : pere et fils ne peuvent plus coexister pacifiquement."},
+{q:"Quel type de conflit cette scene illustre-t-elle ?",a:"Un conflit d'interets financiers",b:"Un conflit de valeurs fondamentales : l'argent contre l'amour",c:"Un conflit de generations sur la mode",r:"b",e:"La confrontation IV.2 est philosophique autant que sentimentale."},
+{q:"Comment cette scene prepare-t-elle le monologue du vol (IV.4) ?",a:"Elle ne le prepare pas",b:"Elle rend logique que La Fleche vole la cassette pour donner a Cleante un pouvoir de negociation",c:"Elle annonce directement le vol",r:"b",e:"La rupture pere-fils dans IV.2 legitime moralement le vol de La Fleche."},
+{q:"Quelle figure stylistique caracterise le discours de Cleante ?",a:"La metaphore financiere",b:"L'antithese repetee : pauvrete choisie vs richesse imposee",c:"La supplique pathetique",r:"b",e:"Les antitheses de Cleante resument en formules frappantes l'opposition centrale de la piece."},
+{q:"Que revele cette scene sur la solitude d'Harpagon ?",a:"Que sa solitude est voulue et assumee",b:"Qu'il perd son fils definitivement a cause de son vice",c:"Qu'il souffre mais refuse de le montrer",r:"b",e:"La rupture avec Cleante est le fruit direct de l'avarice."}
+],
+"4-3":[
+{q:"Quelle nouvelle La Fleche apporte-t-il a Cleante ?",a:"Que Mariane veut fuir",b:"Qu'il a decouvert et vole la cassette d'or d'Harpagon",c:"Que le commissaire est en chemin",r:"b",e:"La Fleche revele qu'il a trouve et derobe la cassette enterree dans le jardin d'Harpagon."},
+{q:"Comment La Fleche a-t-il decouvert la cachette ?",a:"Harpagon lui avait dit",b:"Il a observe les allees et venues paranoiaques d'Harpagon dans le jardin",c:"Maitre Jacques lui avait indique",r:"b",e:"La Fleche a deduit l'emplacement de la cassette en observant les comportements d'Harpagon."},
+{q:"Quelle est la reaction de Cleante quand il apprend le vol ?",a:"Il est choque par l'illegalite du geste",b:"Il voit immediatement dans la cassette un outil de pression sur son pere",c:"Il ordonne de rendre la cassette",r:"b",e:"Cleante comprend que la cassette est sa carte maitresse dans la negociation avec Harpagon."},
+{q:"Quel renversement de pouvoir s'opere ?",a:"Aucun",b:"Le fils depossede devient le detenteur du bien le plus precieux du pere",c:"Harpagon prend le controle",r:"b",e:"La cassette volee transforme Cleante d'impuissant en negociateur puissant."},
+{q:"Quelle est la signification morale du vol de la cassette ?",a:"C'est un acte criminel sans justification",b:"C'est la justice poetique : l'avarice d'Harpagon porte en elle sa propre punition",c:"C'est une vengeance arbitraire",r:"b",e:"Moliere applique la logique de la comedie morale : le vice se retourne contre son auteur."},
+{q:"Pourquoi La Fleche a-t-il pris cette initiative ?",a:"Par cupidite personnelle",b:"Par loyaute envers Cleante et desir de lui donner les moyens de se liberer",c:"Par vengeance contre Harpagon",r:"b",e:"La Fleche agit par devotion envers son maitre."},
+{q:"Quel est le contenu exact de la cassette ?",a:"Des bijoux et des terres",b:"Des pieces d'or : les dix mille ecus d'Harpagon",c:"Des documents financiers secrets",r:"b",e:"La cassette contient l'or accumule d'Harpagon - sa richesse liquide et son objet-fetiche."},
+{q:"Comment le vol de la cassette fait-il avancer l'intrigue ?",a:"Il resout directement tous les problemes",b:"Il cree le levier de pression qui permettra la negociation finale",c:"Il aggrave irremediablement la situation",r:"b",e:"Sans la cassette volee, Cleante n'aurait aucun moyen de forcer son pere a consentir au mariage."},
+{q:"La Fleche connait-il les plans de Cleante pour utiliser la cassette ?",a:"Oui, il les a planifies ensemble",b:"Non, il a simplement saisi une opportunite - c'est Cleante qui improvisera la strategie",c:"La Fleche agit sur les ordres d'Anselme",r:"b",e:"La Fleche a agi instinctivement : c'est Cleante qui comprend comment transformer le vol en instrument de liberation."},
+{q:"Quelle figure dramaturgique la scene IV.3 constitue-t-elle ?",a:"Un denouement complet",b:"Un coup de theatre qui renverse le rapport de force",c:"Une scene de transition sans importance",r:"b",e:"Le vol de la cassette est le pivot mecanique de toute la piece."}
+],
+"4-4":[
+{q:"Que fait Harpagon des le debut de la scene IV.4 ?",a:"Il accuse son fils du vol",b:"Il decouvre le vol de sa cassette et entre dans une crise de demence",c:"Il appelle la police tranquillement",r:"b",e:"Harpagon, decouvrant la disparition de sa cassette, bascule dans un etat de panique absolue."},
+{q:"Quelle est la premiere phrase du celebre monologue d'Harpagon ?",a:"Mon argent a disparu !",b:"Au voleur ! Au voleur ! A l'assassin ! Au meurtrier !",c:"Qui a pris ma cassette ?",r:"b",e:"Le monologue s'ouvre sur une litanie de cris qui assimile le vol a un meurtre."},
+{q:"Qui Harpagon accuse-t-il du vol ?",a:"Uniquement La Fleche",b:"Tout le monde, y compris lui-meme et le public",c:"Uniquement ses domestiques",r:"b",e:"Harpagon accuse successivement tout son entourage et finit par s'adresser directement au public."},
+{q:"Quel geste etrange Harpagon fait-il ?",a:"Il se frappe la tete contre le mur",b:"Il s'agrippe lui-meme le bras en croyant attraper le voleur",c:"Il deterre son jardin",r:"b",e:"Dans sa folie, Harpagon s'agrippe le bras et croit tenir le voleur - il se bat contre lui-meme."},
+{q:"Quelle est la signification de la rupture du quatrieme mur ?",a:"Moliere manque d'inspiration",b:"La folie d'Harpagon depasse les limites de la fiction : il prend le public a partie",c:"C'est une convention habituelle",r:"b",e:"En s'adressant au public, Harpagon sort de la realite dramatique - sa folie est totale."},
+{q:"Comment Harpagon qualifie-t-il sa perte ?",a:"Comme un simple desagrement",b:"Comme un assassinat, un meurtre - la perte de l'or equivaut a la mort",c:"Comme une injustice reparable",r:"b",e:"Pour Harpagon, l'or EST sa vie : le voler c'est le tuer."},
+{q:"Quel type de comique ce monologue illustre-t-il ?",a:"La farce pure avec grimaces et cabrioles",b:"Le comique pathetique : le rire qui se mele au malaise devant une vraie souffrance",c:"Le comique de langage",r:"b",e:"Moliere repousse les frontieres du genre : la folie d'Harpagon est risible ET pathetique."},
+{q:"Quelle declaration absurde Harpagon prononce-t-il sur sa propre vie ?",a:"Qu'il va partir en exil",b:"Que sans son argent il ne peut plus vivre, que sa vie ne vaut rien",c:"Qu'il va se remarier vite",r:"b",e:"Harpagon dit litteralement qu'il veut mourir sans sa cassette - l'or est sa raison d'etre."},
+{q:"Ce monologue est-il une scene comique ou tragique selon la critique ?",a:"Purement comique, sans profondeur",b:"Une scene sur la frontiere entre comedie et tragedie, parmi les plus complexes de Moliere",c:"Purement tragique, sans humour",r:"b",e:"Ce monologue est l'objet de debats critiques depuis le XVIIe siecle."},
+{q:"Quelle verite sur l'avarice ce monologue revele-t-il ?",a:"L'avarice est un vice mineur",b:"L'avarice pousse l'homme a substituer l'or aux relations humaines et a en perdre la raison",c:"L'avarice rend les hommes prudents",r:"b",e:"La folie d'Harpagon montre que l'avarice est une pathologie qui detruit la raison et l'humanite."}
+],
+"4-5":[
+{q:"Contre qui Maitre Jacques porte-t-il des accusations dans la scene IV.5 ?",a:"Contre Cleante",b:"Contre Valere, pour se venger des coups recus",c:"Contre La Fleche",r:"b",e:"Maitre Jacques saisit l'enquete d'Harpagon pour designer Valere comme le voleur."},
+{q:"Quelle est la motivation de Maitre Jacques ?",a:"La cupidite - il veut une recompense",b:"La vengeance personnelle pour les coups subis",c:"La justice - il sait que Valere a vole",r:"b",e:"L'accusation est entierement fondee sur la rancune, pas sur des preuves reelles."},
+{q:"Comment Harpagon reagit-il a l'accusation ?",a:"Il demande des preuves",b:"Il croit tout immediatement - aveugle par la douleur",c:"Il se mefie de Maitre Jacques",r:"b",e:"La souffrance d'Harpagon le rend credule : il accepte l'accusation sans questionnement."},
+{q:"Maitre Jacques dit-il la verite quand il accuse Valere ?",a:"Oui, il a des informations reelles",b:"Non, il ment - il sait que Valere n'a pas vole la cassette",c:"Il ne sait pas s'il dit la verite",r:"b",e:"Maitre Jacques invente une accusation mensongere par vengeance."},
+{q:"Quelle est l'ironie dramatique de la situation ?",a:"Le vrai voleur (La Fleche) est dans la maison",b:"Maitre Jacques accuse le seul innocent alors que le vrai coupable est hors de portee",c:"Harpagon connait deja le nom du voleur",r:"a",e:"La Fleche a vole pour Cleante, mais c'est Valere, parfaitement innocent de ce vol, qui est accuse."},
+{q:"Qu'est-ce que l'accusation de Maitre Jacques declenche malgre lui ?",a:"La reconciliation pere-fils",b:"L'arrestation de Valere qui provoquera la revelation de son identite",c:"La fuite de la famille",r:"b",e:"L'accusation de Maitre Jacques mene a l'interrogatoire de Valere, occasion du grand quiproquo."},
+{q:"Quel defaut humain universel cette scene illustre-t-elle ?",a:"La lachete",b:"La tentation de profiter d'une crise pour regler des comptes personnels",c:"L'avarice",r:"b",e:"Maitre Jacques profite de la detresse d'Harpagon pour servir ses interets prives."},
+{q:"Quel est le resultat concret pour Valere ?",a:"Il fuit immediatement",b:"Il est arrete ou convoque pour repondre des accusations",c:"Il est gracie sans proces",r:"b",e:"Valere doit se defendre des accusations de Maitre Jacques."},
+{q:"Comment Moliere traite-t-il Maitre Jacques moralement ?",a:"Comme un pur mechant",b:"Avec nuance : Maitre Jacques est responsable mais comprehensible",c:"Comme un heros comique",r:"b",e:"Moliere ne condamne pas Maitre Jacques sans nuances : sa vengeance est nee d'une vraie injustice."},
+{q:"Quelle lecon Moliere tire-t-il de la faiblesse d'Harpagon ?",a:"Que les avares sont facilement dupes quand leur tresor est en jeu",b:"Que les enquetes sont toujours biaisees",c:"Que les domestiques sont tous malhonnetes",r:"a",e:"Harpagon, aveugle par la douleur, accepte n'importe quelle piste."}
+],
+"4-6":[
+{q:"Quel est le sujet du quiproquo central de la scene IV.6 ?",a:"Valere croit etre accuse du vol alors qu'il s'agit de son amour pour Elise",b:"Valere croit etre accuse de son amour pour Elise alors qu'Harpagon parle du vol de la cassette",c:"Harpagon confond Valere avec Cleante",r:"b",e:"Valere plaide pour son amour envers Elise ; Harpagon croit entendre des aveux sur le vol de la cassette."},
+{q:"Comment Valere reagit-il quand il est confronte a Harpagon ?",a:"Il nie tout et accuse Maitre Jacques",b:"Il avoue bravement sa faute en pensant parler de son amour pour Elise",c:"Il fuit",r:"b",e:"Valere assume noblement ce qu'il croit etre le vrai reproche - son amour pour Elise."},
+{q:"Sur quel mot repose le quiproquo ?",a:"Or",b:"Tresor - tresor monetaire pour Harpagon, tresor amoureux pour Valere",c:"Mariage",r:"b",e:"La polysemie du mot tresor cree le malentendu : chaque personnage lui donne un sens different."},
+{q:"Quel est le mecanisme central du quiproquo molieresque ?",a:"La ressemblance physique entre deux personnages",b:"La polysemie d'un vocabulaire qui signifie differentes choses pour chaque interlocuteur",c:"Une erreur de nom",r:"b",e:"Moliere exploite la polysemie des mots : chaque terme a deux sens simultanement valides."},
+{q:"En quoi le quiproquo revele-t-il paradoxalement une verite ?",a:"Il ne revele rien de vrai",b:"Valere revele son amour pour Elise en croyant parler du vol - la verite sort par erreur",c:"Harpagon decouvre le vrai voleur",r:"b",e:"La comedie de l'erreur produit ici un effet de verite : l'amour de Valere pour Elise est revele."},
+{q:"Comment Harpagon interprete-t-il l'aveu d'amour de Valere pour Elise ?",a:"Correctement : comme un aveu d'amour",b:"A travers le prisme de son obsession : il croit que Valere avoue avoir vole sa cassette",c:"Il ne comprend rien",r:"b",e:"Harpagon percoit toutes les repliques de Valere a travers le filtre unique de sa cassette disparue."},
+{q:"Quel registre comique cette scene exploite-t-elle ?",a:"La farce pure",b:"Le comique du quiproquo enrichi de pathos : le malentendu met en danger un innocent",c:"La comedie musicale",r:"b",e:"Le quiproquo est comique mais tendu : Valere risque d'etre condamne pour un crime qu'il n'a pas commis."},
+{q:"Quelle est la fonction de ce quiproquo dans la structure de l'acte IV ?",a:"Faire rire sans consequences",b:"Creer la tension maximale avant les revelations de l'acte V",c:"Introduire un personnage nouveau",r:"b",e:"Le quiproquo porte la tension a son comble et prepare les reconnaissances liberatrices de l'acte V."},
+{q:"Quelle lecon sur le langage Moliere tire-t-il ?",a:"Les mots ont toujours un sens unique et precis",b:"Les mots sont des pieges : leur ambiguite peut conduire a l'injustice",c:"Mieux vaut se taire",r:"b",e:"La scene est une meditation sur le danger de l'ambiguite linguistique dans un contexte de passion."},
+{q:"Quelle est la position d'Elise dans le quiproquo ?",a:"Elle l'explique immediatement",b:"Elle assiste impuissante a l'effondrement de la situation, incapable d'intervenir sans tout reveler",c:"Elle profite de la situation",r:"b",e:"Elise vit un supplice : chaque replique de Valere aggrave le malentendu sans qu'elle puisse intervenir."}
+],
+"4-7":[
+{q:"Quelle revelation Valere fait-il dans la scene IV.7 ?",a:"Il avoue le vol de la cassette",b:"Il revele son identite : il est fils du seigneur Thomas d'Alburci",c:"Il accuse Cleante",r:"b",e:"Acculle, Valere devoile sa noblesse d'origine pour appuyer sa legitimite morale."},
+{q:"Qui est le seigneur Thomas d'Alburci ?",a:"Un marchand venitien",b:"Un noble napolitain dont toute la famille a ete dispersee par un naufrage",c:"Le pere adoptif de Mariane",r:"b",e:"Le seigneur Thomas d'Alburci est le pere biologique de Valere, disperse par un naufrage seize ans plus tot."},
+{q:"Comment Anselme reagit-il a cette revelation ?",a:"Il est indifferent",b:"Il commence a comprendre que Valere pourrait etre son fils perdu",c:"Il denonce Valere comme un menteur",r:"b",e:"La revelation de Valere declenche chez Anselme une reconnaissance progressive et stupefaite."},
+{q:"Pourquoi Harpagon est-il incapable de comprendre l'importance de cette revelation ?",a:"Il est trop vieux",b:"Il est encore trop obnubile par sa cassette pour s'interesser aux genealogies",c:"Il ne connait pas Thomas d'Alburci",r:"b",e:"L'avarice empeche Harpagon de percevoir la dimension humaine de la scene."},
+{q:"Quel mecanisme dramatique s'enclenche avec la revelation de Valere ?",a:"Le jugement final",b:"La cascade des reconnaissances qui dominera l'acte V",c:"La fuite de Valere",r:"b",e:"La revelation de l'identite de Valere ouvre la sequence de reconnaissances qui resoudra toute l'intrigue."},
+{q:"Depuis combien de temps la famille d'Alburci est-elle dispersee ?",a:"Dix ans",b:"Seize ans",c:"Vingt ans",r:"b",e:"Le naufrage qui dispersa la famille eut lieu seize ans avant l'action de la piece."},
+{q:"Que veut Harpagon faire de Valere apres sa revelation d'identite ?",a:"L'adopter comme fils",b:"Le faire arreter et juger pour le vol suppose de la cassette",c:"Le chasser sans poursuites",r:"b",e:"Harpagon ne retient de toute la scene que son desir de recuperer sa cassette."},
+{q:"Quel theme de la comedie classique cette scene active-t-elle ?",a:"La vengeance noble",b:"L'anagnorisis - la reconnaissance d'identite comme moteur du denouement",c:"Le travestissement",r:"b",e:"L'anagnorisis est la reconnaissance qui resout l'intrigue - mecanisme fondamental de la comedie classique."},
+{q:"Quel contraste Moliere construit-il entre Anselme et Harpagon ?",a:"Anselme est riche, Harpagon est pauvre",b:"Anselme est emu par la revelation humaine ; Harpagon ne pense qu'a ses ecus",c:"Anselme approuve Harpagon",r:"b",e:"Le contraste illustre les deux poles moraux de la piece."},
+{q:"En quoi la fin de l'acte IV prepare-t-elle l'acte V ?",a:"Elle resout deja les principaux problemes",b:"Elle pose les deux elements manquants dont la resolution fera le denouement",c:"Elle introduit de nouveaux obstacles",r:"b",e:"L'acte IV se ferme sur deux questions ouvertes : identite de Valere et cassette volee."}
+],
+"5-1":[
+{q:"Quel officier Harpagon convoque-t-il au debut de l'acte V ?",a:"Un avocat",b:"Un commissaire accompagne de son clerc",c:"Le lieutenant de police",r:"b",e:"Harpagon engage immediatement un commissaire pour mener l'enquete officielle sur le vol."},
+{q:"Quelle declaration absurde Harpagon prononce-t-il ?",a:"Qu'il va partir en voyage",b:"Que si on ne retrouve pas son argent, il se pendra apres avoir fait pendre tout le monde",c:"Qu'il va bruler sa maison",r:"b",e:"La demesure comique d'Harpagon atteint son sommet : il veut faire pendre tout le monde pour son or."},
+{q:"Comment Moliere traite-t-il la procedure judiciaire ?",a:"Avec respect et serieux",b:"En la ridiculisant comme inefficace, baroque et impuissante",c:"Sans y preter attention",r:"b",e:"La procedure judiciaire est tournee en derision : ses formules creuses et son inefficacite sont comiques."},
+{q:"Quelle critique sociale Moliere formule-t-il ?",a:"La critique du mariage force",b:"La critique des institutions judiciaires impuissantes sous l'Ancien Regime",c:"La critique de la noblesse",r:"b",e:"Moliere denonce une justice qui parle beaucoup mais ne protege pas vraiment les victimes."},
+{q:"Quel type de justice Harpagon cherche-t-il reellement ?",a:"Une justice equitable et proportionnee",b:"Une vengeance comptable : recuperer son or, pas punir un coupable moralement",c:"La rehabilitation de son honneur",r:"b",e:"Harpagon ne veut pas la justice au sens moral - il veut son argent."},
+{q:"Le commissaire est-il presente comme competent ?",a:"Oui, il trouve rapidement des pistes",b:"Non, il est inefficace et ses formules juridiques masquent son impuissance",c:"Il est tres competent mais Harpagon refuse ses conseils",r:"b",e:"Le commissaire incarne l'institution vide : beaucoup de formes, pas de fond."},
+{q:"Quel est le rapport entre la justice et l'argent dans la vision d'Harpagon ?",a:"La justice est superieure a l'argent",b:"L'argent est la seule vraie justice : qui possede l'or possede le droit",c:"Il n'y a aucun rapport",r:"b",e:"Harpagon utilise la machine judiciaire comme prolongement de son droit de propriete."},
+{q:"Que revele la reaction excessive d'Harpagon ?",a:"Qu'il est un peu inquiet",b:"Que la cassette represente pour lui son identite meme - sans elle, il n'existe plus",c:"Qu'il a d'autres ressources",r:"b",e:"La demesure de la reaction confirme : l'or et la vie d'Harpagon sont une seule et meme chose."},
+{q:"Quel adjectif qualifierait le mieux la justice d'Harpagon ?",a:"Equitable",b:"Vindicative et disproportionnee",c:"Absente",r:"b",e:"La justice d'Harpagon est une justice de la vengeance aveugle, non de l'equite."},
+{q:"Comment la scene V.1 reprend-elle le theme de la folie developpe au IV.4 ?",a:"Elle ne le reprend pas",b:"Elle montre que la folie d'Harpagon se rationalise en procedure - il institutionnalise sa demence",c:"La folie a completement disparu",r:"b",e:"Le monologue fou de IV.4 devient en V.1 une procedure judiciaire officielle."}
+],
+"5-2":[
+{q:"Quelle est l'attitude de Maitre Jacques lors de l'interrogatoire officiel ?",a:"Il se retracte et dit la verite",b:"Il maintient ses accusations contre Valere et invente des details supplementaires",c:"Il accuse Cleante",r:"b",e:"Maitre Jacques va plus loin dans son mensonge devant le commissaire."},
+{q:"Quel detail physique Maitre Jacques invente-t-il pour accuser Valere ?",a:"Qu'il boite",b:"Qu'il avait les yeux rouges et le col rouge",c:"Qu'il portait un masque",r:"b",e:"Maitre Jacques improvise des details physiques absurdes pour rendre son temoignage plus credible."},
+{q:"Que fait le clerc du commissaire ?",a:"Il contredit Maitre Jacques",b:"Il note scrupuleusement tout ce que dit Maitre Jacques, vrai ou faux",c:"Il dort",r:"b",e:"Le clerc note tout sans discernement - absurdite d'une justice qui enregistre sans verifier."},
+{q:"En quoi le comportement de Maitre Jacques est-il dangereux ?",a:"Il ne l'est pas - le mensonge ne peut pas nuire",b:"Un faux temoignage officiel peut envoyer un innocent en prison ou pire",c:"Il est legerement incorrect mais sans consequence",r:"b",e:"Le mensonge de Maitre Jacques devient une deposition officielle - instrument potentiel de condamnation injuste."},
+{q:"Quel aspect du systeme judiciaire Moliere critique-t-il ?",a:"La lenteur des proces",b:"La credulite institutionnelle : on note et on croit les temoins sans verifier",c:"La corruption des juges",r:"b",e:"Moliere denonce une justice fondee sur la parole non verifiee des temoins."},
+{q:"Maitre Jacques se contredit-il pendant son temoignage ?",a:"Non, son histoire est parfaitement coherente",b:"Oui, il s'embrouille dans ses inventions",c:"Il refuse de repondre aux questions",r:"b",e:"Les contradictions de Maitre Jacques sont comiques mais reelles."},
+{q:"Quelle ironie Moliere construit-il avec le personnage du clerc ?",a:"Le clerc est plus intelligent que le commissaire",b:"Le clerc, en notant tout sans jugement, incarne la justice aveugle qui confond enregistrement et verite",c:"Le clerc est corrompu",r:"b",e:"L'image du clerc qui note tout sans discernement est la metaphore d'une institution qui confond le formalisme avec la justice."},
+{q:"Comment Maitre Jacques justifie-t-il ses accusations ?",a:"Par des preuves materielles solides",b:"Par une certitude personnelle sans fondement objectif",c:"Par des aveux de Valere",r:"b",e:"Le temoignage de Maitre Jacques ne repose que sur sa ranceur personnelle deguisee en conviction."},
+{q:"Quel est le paradoxe de la situation de Maitre Jacques ?",a:"Il obtient ce qu'il voulait : nuire a Valere",b:"Il se retrouve en position de faussaire officiel - sa vengeance devient un crime punissable",c:"Il est recompense par Harpagon",r:"b",e:"En deposant officiellement un faux temoignage, Maitre Jacques se place lui-meme en situation de faux en justice."},
+{q:"Comment la scene V.2 fait-elle avancer la piece ?",a:"Elle ralentit l'action",b:"Elle cristallise toutes les tensions - l'accusation de Valere force les revelations d'identite",c:"Elle resout l'intrigue principale",r:"b",e:"La pression judiciaire sur Valere est ce qui rend inevitable le grand devoilement de l'acte V."}
+],
+"5-3":[
+{q:"De quoi Valere parle-t-il principalement en se defendant dans la scene V.3 ?",a:"Du vol de la cassette",b:"De son amour pour Elise - en croyant que c'est pour cela qu'on l'accuse",c:"De son identite noble",r:"b",e:"Valere plaide pour son amour envers Elise en pensant que c'est le vrai reproche."},
+{q:"A quel moment precis le quiproquo se resout-il ?",a:"Il ne se resout pas ici",b:"Quand Harpagon mentionne explicitement la cassette et que Valere comprend l'erreur",c:"Quand Elise intervient",r:"b",e:"La mention directe de la cassette par Harpagon permet enfin a Valere de comprendre qu'on l'accusait de vol."},
+{q:"Comment Harpagon reagit-il quand il comprend que Valere aime Elise ?",a:"Il est indifferent",b:"Il est doublement furieux : pour le vol suppose ET pour l'amour impudent de Valere",c:"Il est soulage de comprendre le quiproquo",r:"b",e:"Harpagon cumule les griefs : Valere est pour lui a la fois voleur presume et galant impudent."},
+{q:"Quelle est la position d'Elise dans cette scene difficile ?",a:"Elle soutient ouvertement Valere",b:"Elle est entre deux feux : defendre Valere l'expose a son pere",c:"Elle est absente",r:"b",e:"Elise ne peut pas defendre Valere sans reveler leur relation."},
+{q:"Que revele Valere de plus sur son identite ?",a:"Rien de nouveau",b:"Il developpe les elements de son histoire familiale noble pour etablir sa credibilite",c:"Il avoue etre un imposteur",r:"b",e:"Valere insiste sur ses origines pour montrer qu'il est digne d'Elise."},
+{q:"Quel argument Valere utilise-t-il pour justifier sa dissimulation ?",a:"Qu'il voulait voler Harpagon",b:"Qu'il n'avait pas d'autre moyen de rester aupres d'Elise qu'il aime sincerement",c:"Qu'il fuyait la justice napolitaine",r:"b",e:"L'amour justifie la dissimulation aux yeux de Valere."},
+{q:"Quel est le ton de cette scene ?",a:"Purement comique et burlesque",b:"Tendu et pathetique : plusieurs destins sont en jeu",c:"Philosophique et calme",r:"b",e:"La scene V.3 est sous haute tension : l'avenir de Valere et d'Elise depend de ce qui va se reveler."},
+{q:"En quoi la resolution du quiproquo fait-elle avancer la situation ?",a:"Elle la bloque davantage",b:"Elle clarifie les accusations et permet de passer aux revelations d'identite",c:"Elle change de sujet",r:"b",e:"Sans la resolution du quiproquo, les revelations d'Anselme ne pourraient pas avoir lieu dans le bon contexte."},
+{q:"Quelle figure de personnage positif Valere incarne-t-il ?",a:"Le calculateur cynique",b:"Le jeune homme noble et sincere qui souffre pour un amour veritable",c:"L'imposteur repentant",r:"b",e:"Valere sort du quiproquo avec sa dignite intacte : il assume tout par amour."},
+{q:"Quel contraste cette scene etablit-elle entre Valere et Harpagon ?",a:"Aucun contraste significatif",b:"Valere risque tout pour l'amour ; Harpagon risque tout pour l'argent - deux absolus incompatibles",c:"Valere est plus riche qu'Harpagon",r:"b",e:"La confrontation V.3 cristallise l'opposition centrale de toute la piece : l'amour contre l'argent."}
+],
+"5-4":[
+{q:"Quelle est la revelation centrale de la scene V.4 ?",a:"Cleante est le fils d'Anselme",b:"Anselme est en realite le seigneur Thomas d'Alburci, pere de Valere ET de Mariane",c:"Frosine est la mere de Mariane",r:"b",e:"Anselme revele etre Thomas d'Alburci - pere des deux amants, ce qui denoue tous les conflits."},
+{q:"Quelle est la reaction d'Anselme quand il reconnait Valere comme son fils ?",a:"Il est sceptique et demande des preuves",b:"Il est bouleverse d'une joie intense apres seize ans de separation",c:"Il est indifferent",r:"b",e:"La reconnaissance apres seize ans de separation provoque chez Anselme une emotion authentique et intense."},
+{q:"Comment Anselme reconnait-il Mariane comme sa fille ?",a:"Par un portrait qu'il porte sur lui",b:"Par les details du naufrage et les signes distinctifs qu'elle porte",c:"Par leur ressemblance physique",r:"b",e:"Les recits concordants du naufrage et les marques identitaires permettent la double reconnaissance."},
+{q:"Quel effet cette double reconnaissance produit-elle sur les projets matrimoniaux ?",a:"Elle les complique davantage",b:"Elle libere tous les couples : Cleante/Mariane et Valere/Elise peuvent s'unir legitimement",c:"Elle ne change rien",r:"b",e:"Anselme etant le pere de Mariane et de Valere, il peut consentir aux deux mariages."},
+{q:"Quelle figure paternelle Anselme represente-t-il ?",a:"Un pere egalement tyrannique mais differemment",b:"Le pere bienveillant et providentiel - le bon pere, exact oppose d'Harpagon",c:"Un pere absent",r:"b",e:"Anselme est l'anti-Harpagon : la ou Harpagon detruit, Anselme reconstruit."},
+{q:"Comment Harpagon reagit-il a la scene de reconnaissance d'Anselme ?",a:"Il est touche aux larmes",b:"Il ne pense qu'a sa cassette et demande quand il va la recuperer",c:"Il participe joyeusement",r:"b",e:"L'incapacite d'Harpagon a etre emu par la scene familiale est sa condamnation morale definitive."},
+{q:"Que symbolise le naufrage d'il y a seize ans ?",a:"Un evenement historique reel",b:"La rupture originelle que le denouement repare - la Providence retablit l'ordre naturel brise",c:"Une metaphore de l'avarice",r:"b",e:"Le naufrage est le trauma fondateur que le denouement guerit."},
+{q:"Pourquoi le fait qu'Anselme soit pere de Mariane est-il crucial ?",a:"Cela lui permet de recuperer de l'argent",b:"Cela signifie qu'Harpagon ne peut plus pretendre a Mariane sans entrer en conflit avec son allie",c:"Cela change son plan matrimonial",r:"b",e:"La revelation retire a Harpagon sa pretention amoureuse sans qu'il ait a renoncer lui-meme."},
+{q:"Quelle convention de la comedie classique Moliere applique-t-il ?",a:"La chute du mechant dans un piege",b:"La reconnaissance (anagnorisis) qui retablit l'ordre naturel des familles",c:"Le retour du heros",r:"b",e:"La reconnaissance est le mecanisme aristotelicien classique de la comedie."},
+{q:"En quoi le denouement par la reconnaissance est-il satisfaisant ?",a:"Il est trop simple et previsible",b:"Il resout tous les conflits en un seul coup de theatre tout en maintenant la coherence psychologique",c:"Il est decevant car Harpagon ne change pas",r:"b",e:"La force du denouement est de resoudre les problemes structurellement - non par la conversion morale."}
+],
+"5-5":[
+{q:"Qui propose de financer les deux mariages dans la scene V.5 ?",a:"Harpagon, soudainement genereux",b:"Anselme, pere des deux epoux",c:"Cleante avec l'argent de la cassette volee",r:"b",e:"Anselme offre de prendre en charge tous les frais des deux mariages."},
+{q:"Quel marchandage Cleante propose-t-il a son pere ?",a:"Il lui offre de rembourser ses dettes",b:"Il lui rendra la cassette contre le consentement au mariage avec Mariane",c:"Il quitte la maison en echange de la paix",r:"b",e:"Cleante utilise la cassette comme levier de negociation."},
+{q:"Comment Harpagon repond-il a la proposition de Cleante ?",a:"Il refuse categoriquement",b:"Il accepte immediatement : la cassette vaut plus que tout consentement",c:"Il hesite longuement",r:"b",e:"Pour Harpagon, l'or passe avant tout : il donne son consentement pour retrouver sa cassette."},
+{q:"Que revele ce marchandage sur la valeur qu'Harpagon accorde a ses enfants ?",a:"Qu'il les aime profondement",b:"Qu'il les cede comme des marchandises contre la recuperation de ses biens",c:"Qu'il accepte leur bonheur par generosite",r:"b",e:"Le pere-tyran cede ses droits parentaux non par amour mais comme monnaie d'echange."},
+{q:"Quel est le sort de Maitre Jacques dans le denouement ?",a:"Il est recompense pour son service",b:"Il est menace de poursuites judiciaires pour son faux temoignage",c:"Il est renvoye sans punition",r:"b",e:"Maitre Jacques paie le prix de son faux temoignage."},
+{q:"Qui est-il decide de punir et pourquoi ?",a:"La Fleche, pour avoir vole la cassette",b:"Maitre Jacques, pour avoir faussement accuse Valere",c:"Frosine, pour son role d'entremetteuse",r:"b",e:"La justice s'exerce sur Maitre Jacques dont la denonciation mensongere aurait pu conduire un innocent au bagne."},
+{q:"En quoi le denouement differe-t-il d'un happy ending classique ?",a:"Les amants ne peuvent pas se marier",b:"Harpagon ne se convertit pas : les mariages sont conclus par marche, non par repentance",c:"Tout le monde meurt",r:"b",e:"Moliere refuse la conversion morale conventionnelle : Harpagon obtient sa cassette, pas la sagesse."},
+{q:"Quelle critique Moliere fait-il de la reconciliation finale ?",a:"Qu'elle est trop belle pour etre vraie",b:"Que la paix sociale est achetee avec de l'argent (celui d'Anselme), non gagnee par la vertu",c:"Qu'elle est impossible",r:"b",e:"Le fait qu'Anselme paye pour tout signifie que l'harmonie finale est une transaction."},
+{q:"Quelle est la condition mise par Harpagon pour donner son consentement ?",a:"Que Cleante rembourse toutes ses dettes",b:"Que la cassette lui soit rendue immediatement et integralement",c:"Que Cleante s'exile un an",r:"b",e:"Le seul critere d'Harpagon est la recuperation totale de son or."},
+{q:"Moliere conclut-il la piece sur une morale explicite ?",a:"Oui, un personnage enonce la lecon",b:"Non, la morale est implicite : le vice d'Harpagon persiste, la societe s'arrange avec lui",c:"Il n'y a aucune morale",r:"b",e:"La conclusion de Moliere est pessimiste sur la correction du vice."}
+],
+"5-6":[
+{q:"Quelle est la derniere replique significative d'Harpagon ?",a:"Je benis le mariage de mes enfants",b:"Et moi, voir ma chere cassette",c:"Pardonnez-moi, mes enfants",r:"b",e:"Pendant que tout le monde se rejouit des mariages, Harpagon ne pense qu'a sa cassette retrouvee."},
+{q:"Que symbolise la priorite qu'Harpagon accorde a la cassette sur les mariages ?",a:"Qu'il n'a pas compris ce qui se passait",b:"Que l'avarice est incurable : aucun evenement humain ne peut changer sa hierarchie des valeurs",c:"Qu'il cache sa joie pour les enfants",r:"b",e:"La derniere image d'Harpagon le montre inchange - Moliere refuse tout arc de transformation."},
+{q:"Quel personnage connait le sort le moins favorable dans le denouement ?",a:"Cleante",b:"Maitre Jacques, condamne pour son faux temoignage",c:"La Fleche",r:"b",e:"Maitre Jacques, personnage sympathique et naif, est le seul reellement puni."},
+{q:"Quelle vision de la societe Moliere presente-t-il dans ce denouement ?",a:"Une societe qui punit les mechants et recompense les bons",b:"Une societe ou le vice persiste mais est contourne : l'ordre apparent est retabli sans guerison morale",c:"Une societe ideale et juste",r:"b",e:"Moliere est profondement lucide : les vices ne disparaissent pas, on s'arrange avec eux."},
+{q:"Quelle est la signification du fait qu'Harpagon ne participe pas a la joie finale ?",a:"Il est fatigue par sa vieillesse",b:"Il est structurellement exclu de la communaute humaine par son vice - sa punition ultime",c:"Il est jaloux des mariages",r:"b",e:"L'avarice a si profondement isole Harpagon qu'il est incapable de participer a la joie familiale."},
+{q:"En quoi la cloture de la piece est-elle une image forte ?",a:"Elle montre Harpagon pleurant de joie",b:"Elle montre Harpagon seul avec sa cassette pendant que la vraie famille - Anselme et ses enfants - se reunit",c:"Elle montre tous les personnages partant ensemble",r:"b",e:"La derniere image est un tableau : Harpagon isole avec sa cassette, pendant que la famille bienveillante se reconstruit."},
+{q:"Que revele la fin de la piece sur la nature de la comedie selon Moliere ?",a:"Que la comedie doit toujours finir heureusement pour tous",b:"Que la comedie peut denoncer un vice sans le corriger et finir sur une ambiguite morale profonde",c:"Que la comedie est toujours legere",r:"b",e:"Moliere revendique une comedie serieuse et critique - elle denonce, elle ne console pas."},
+{q:"Pourquoi Anselme est-il plus heureux qu'Harpagon a la fin ?",a:"Il est plus riche",b:"Il a retrouve ses enfants et son identite - la vraie richesse selon la morale de la piece",c:"Il a gagne un proces",r:"b",e:"Anselme represente la richesse humaine (famille, amour, identite) que l'avarice d'Harpagon a detruite pour lui."},
+{q:"La piece critique-t-elle la societe ou l'individu ?",a:"Uniquement l'individu Harpagon",b:"Les deux : Harpagon est responsable mais la societe qui tolere l'avarice est aussi en cause",c:"Uniquement la societe",r:"b",e:"Moliere cible a la fois le vice individuel et le systeme social qui le genere."},
+{q:"En une formule, quelle est la these centrale de L'Avare ?",a:"L'argent fait le bonheur",b:"L'avarice detruit l'humanite de celui qui s'y abandonne et ravage tout ce qui l'entoure",c:"Les jeunes ont toujours raison contre les vieux",r:"b",e:"L'Avare est une demonstration en cinq actes que le vice de l'avarice deshumanise son porteur et ravage son entourage."}
+],
+  "vt-1":[
+  {q:"Ou sont suspendus les decors dans un theatre ?",a:"Dans les cintres",b:"Dans les loges",c:"Dans les coulisses",r:"a",e:"Les cintres sont la partie situee au-dessus de la scene ou sont suspendus les decors."},
+  {q:"Qu'est-ce que la scene dans un theatre ?",a:"La partie haute de la salle",b:"L'espace derriere le rideau",c:"L'espace ou se deroule la representation",r:"c",e:"La scene est l'espace ou les acteurs jouent et ou se deroule toute la representation."},
+  {q:"Que designe 'cote cour' pour un acteur face au public ?",a:"Le fond de la scene",b:"Le cote gauche",c:"Le cote droit",r:"c",e:"Cote cour designe le cote droit de la scene pour l'acteur qui fait face au public."},
+  {q:"Que designe 'cote jardin' pour un acteur face au public ?",a:"Le cote gauche",b:"Le cote droit",c:"L'avant-scene",r:"a",e:"Cote jardin designe le cote gauche de la scene pour l'acteur qui fait face au public."},
+  {q:"Comment s'appelle la partie de la salle situee devant la scene au niveau du sol ?",a:"Les baignoires",b:"L'orchestre",c:"La corbeille",r:"b",e:"L'orchestre est la partie de la salle situee au niveau du sol, directement devant la scene."},
+  {q:"Qu'est-ce que le poulailler (paradis) ?",a:"Le dernier balcon, tout en haut de la salle",b:"Le premier balcon de la salle",c:"Les loges des acteurs en hauteur",r:"a",e:"Le poulailler, appele aussi paradis, est le dernier balcon situe tout en haut de la salle de spectacle."},
+  {q:"A quoi servent les loges dans un theatre ?",a:"A accueillir des spectateurs privilegies",b:"A permettre aux acteurs de se preparer",c:"A entreposer les decors",r:"b",e:"Les loges sont les pieces ou les acteurs s'habillent et se maquillent avant d'entrer en scene."},
+  {q:"Qu'est-ce que la rampe dans un theatre ?",a:"Le rideau de fond de scene",b:"L'escalier d'acces a la scene",c:"L'eclairage place a l'avant de la scene",r:"c",e:"La rampe est la rangee de lumieres placee au bord avant de la scene pour eclairer les acteurs depuis le bas."},
+  {q:"Comment appelle-t-on les loges laterales proches de la scene ?",a:"Les cintres",b:"Les baignoires",c:"La corbeille",r:"b",e:"Les baignoires sont des loges laterales situees au niveau de l'orchestre, proches de la scene."},
+  {q:"Qu'est-ce que les coulisses dans un theatre ?",a:"Les espaces caches derriere et sur les cotes de la scene",b:"Les places les moins cheres en hauteur",c:"Les balcons superieurs de la salle",r:"a",e:"Les coulisses sont les espaces invisibles du public, situes sur les cotes et derriere la scene, ou attendent les acteurs."}
+  ],
+  "vt-2":[
+  {q:"Qu'est-ce qu'une didascalie au theatre ?",a:"Une indication donnee par l'auteur sur le jeu ou la mise en scene",b:"Une longue replique d'un personnage",c:"Une parole entendue seulement par le public",r:"a",e:"Les didascalies sont les indications ecrites par l'auteur dans le texte pour guider les comediens."},
+  {q:"Qu'est-ce qu'une tirade au theatre ?",a:"Un echange rapide entre deux personnages",b:"Une longue replique prononcee sans interruption par un personnage",c:"Une courte replique humoristique",r:"b",e:"La tirade est une longue prise de parole d'un seul personnage, adressee a d'autres personnages presents."},
+  {q:"Qu'est-ce qu'un aparte au theatre ?",a:"Une grande division de la piece",b:"Une longue parole d'un personnage seul en scene",c:"Une parole que le personnage fait entendre au public mais que les autres personnages n'entendent pas",r:"c",e:"L'aparte est une convention theatrale : le personnage parle au public sans que les autres personnages soient censes l'entendre."},
+  {q:"Comment appelle-t-on une grande division d'une piece de theatre ?",a:"Un acte",b:"Une scene",c:"Un monologue",r:"a",e:"Un acte est la grande unite structurelle d'une piece. L'Avare de Moliere comprend cinq actes."},
+  {q:"Qu'est-ce qu'un quiproquo ?",a:"Une longue tirade de l'acteur principal",b:"La fin heureuse d'une piece",c:"Un malentendu entre les personnages",r:"c",e:"Le quiproquo est un malentendu : un personnage en prend un autre pour quelqu'un d'autre, ou comprend une situation de facon erronee."},
+  {q:"Qu'est-ce que la scene d'exposition dans une piece de theatre ?",a:"La scene du debut qui presente les personnages, le lieu et l'intrigue",b:"La derniere scene qui resout tous les conflits",c:"La scene ou le decor est presente au public",r:"a",e:"La scene d'exposition ouvre la piece et donne au spectateur toutes les informations necessaires pour comprendre l'action."},
+  {q:"Qu'est-ce qu'un monologue au theatre ?",a:"Un echange rapide entre deux personnages",b:"Une courte replique destinee au public",c:"Une longue parole prononcee par un personnage seul en scene",r:"c",e:"Le monologue est une longue prise de parole d'un personnage seul en scene, parfois utilise pour exprimer ses pensees interieures."},
+  {q:"Qu'est-ce que le denouement d'une piece ?",a:"Une subdivision d'un acte",b:"La fin de l'histoire ou les conflits sont resolus",c:"Le debut de la piece avec la presentation des personnages",r:"b",e:"Le denouement est la partie finale de la piece qui resout tous les noeuds de l'intrigue et clot l'action dramatique."},
+  {q:"Qu'est-ce qu'une replique au theatre ?",a:"Une longue tirade prononcee sans interruption",b:"Une indication scenique de l'auteur",c:"La prise de parole d'un personnage dans un dialogue",r:"c",e:"La replique est l'unite de base du dialogue theatral : chaque prise de parole d'un personnage constitue une replique."},
+  {q:"Qu'est-ce qu'une scene dans la structure d'une piece ?",a:"Une grande division equivalente a un acte",b:"Une subdivision d'un acte delimitee par les entrees et sorties des personnages",c:"Une longue parole d'un seul acteur",r:"b",e:"La scene est une subdivision de l'acte, delimitee par l'arrivee ou le depart d'un personnage."}
+  ],
+  "vt-3":[
+  {q:"Qu'est-ce que le comique de geste ?",a:"Le rire provoque par les defauts d'un personnage",b:"Le rire provoque par les mouvements et actions physiques des personnages",c:"Le rire provoque par les paroles ou jeux de mots",r:"b",e:"Le comique de geste repose sur les actions corporelles : chutes, grimaces, mimiques, poursuites et toutes les formes de gestuelle qui font rire."},
+  {q:"Qu'est-ce que le comique de mots ?",a:"Le rire provoque par les paroles, jeux de mots, repetitions ou maladresses de langage",b:"Le rire provoque par les situations incongrues",c:"Le rire provoque par les defauts moraux d'un personnage",r:"a",e:"Le comique de mots exploite les ressources du langage : calembours, malentendus verbaux, repetitions comiques."},
+  {q:"Qu'est-ce que le comique de caractere ?",a:"Le rire provoque par une situation imprevisible",b:"Le rire provoque par les gestes et mimiques d'un acteur",c:"Le rire provoque par les defauts ou travers exageres d'un personnage",r:"c",e:"Le comique de caractere nait de l'exageration d'un trait de personnalite : avarice, jalousie, pedanterie..."},
+  {q:"Qu'est-ce que le comique de situation ?",a:"Le rire provoque par les mouvements exageres des acteurs",b:"Le rire provoque par une situation amusante, inattendue ou absurde",c:"Le rire provoque par les jeux de mots et calembours",r:"b",e:"Le comique de situation nait des circonstances elles-memes : rencontres imprevisibles, malentendus, retournements burlesques."},
+  {q:"Un acteur trebuche ou fait une chute volontairement. C'est du comique de...",a:"Geste",b:"Caractere",c:"Mots",r:"a",e:"Toute forme d'action physique comique - chute, grimace, geste exagere - releve du comique de geste."},
+  {q:"Un personnage repete sans cesse le meme mot de facon absurde. C'est du comique de...",a:"Caractere",b:"Situation",c:"Mots",r:"c",e:"La repetition comique d'un mot ou d'une expression est une figure classique du comique de mots."},
+  {q:"Deux personnages se rencontrent sans savoir que l'un cherche l'autre depuis longtemps. C'est du comique de...",a:"Mots",b:"Situation",c:"Geste",r:"b",e:"Le quiproquo et les rencontres imprevisibles entre personnages relevent du comique de situation."},
+  {q:"L'avarice extreme et caricaturale d'Harpagon dans L'Avare releve du comique de...",a:"Caractere",b:"Mots",c:"Geste",r:"a",e:"Harpagon incarne le type de l'avare : son defaut est exagere jusqu'a la caricature, c'est du comique de caractere."},
+  {q:"Un calembour ou un jeu de mots ambigu releve du comique de...",a:"Situation",b:"Mots",c:"Geste",r:"b",e:"Les calembours, jeux sur la double signification des mots et malentendus verbaux constituent le comique de mots."},
+  {q:"Deux personnages croient parler de la meme chose mais parlent en realite de deux choses differentes. C'est du comique de...",a:"Geste",b:"Mots",c:"Situation",r:"c",e:"Ce malentendu ou les personnages ne parlent pas de la meme chose sans le savoir est un ressort classique du comique de situation."}
+  ]
+};
+
+  // ===== VOCABULAIRE THEATRE DATA =====
+  const VOCAB_DB = {
+    1:{
+      titre:"Les parties du theatre",
+      desc:"Les espaces et lieux du theatre",
+      termes:[
+        {mot:"Les cintres",def:"Partie situee au-dessus de la scene ou sont suspendus les decors."},
+        {mot:"Le rideau",def:"Tissu qui s'ouvre et se ferme devant la scene."},
+        {mot:"Les decors",def:"Elements representant le lieu de l'action."},
+        {mot:"Les loges",def:"Pieces ou les acteurs se preparent."},
+        {mot:"Les coulisses",def:"Espaces caches derriere et sur les cotes de la scene."},
+        {mot:"Cote cour",def:"Cote droit de la scene pour l'acteur."},
+        {mot:"La rampe",def:"Eclairage place a l'avant de la scene."},
+        {mot:"Les acteurs",def:"Personnes qui jouent les personnages."},
+        {mot:"Cote jardin",def:"Cote gauche de la scene pour l'acteur."},
+        {mot:"La scene",def:"Espace ou se deroule la representation."},
+        {mot:"L'orchestre",def:"Partie de la salle situee devant la scene."},
+        {mot:"Les baignoires",def:"Loges laterales proches de la scene."},
+        {mot:"La corbeille",def:"Premier niveau de places au-dessus de l'orchestre."},
+        {mot:"Le premier balcon",def:"Premier balcon de la salle."},
+        {mot:"Le deuxieme balcon",def:"Balcon situe au-dessus du premier."},
+        {mot:"Le poulailler (paradis)",def:"Dernier balcon, tout en haut de la salle."}
+      ]
+    },
+    2:{
+      titre:"Le vocabulaire du theatre",
+      desc:"Les termes dramaturgiques essentiels",
+      termes:[
+        {mot:"Didascalie",def:"Indication donnee par l'auteur."},
+        {mot:"Tirade",def:"Longue replique."},
+        {mot:"Aparte",def:"Parole entendue seulement par le public."},
+        {mot:"Acte",def:"Grande division d'une piece."},
+        {mot:"Scene d'exposition",def:"Debut presentant personnages et intrigue."},
+        {mot:"Scene",def:"Subdivision d'un acte."},
+        {mot:"Quiproquo",def:"Malentendu."},
+        {mot:"Denouement",def:"Fin de l'histoire."},
+        {mot:"Replique",def:"Reponse d'un personnage."},
+        {mot:"Monologue",def:"Longue parole d'un personnage seul."}
+      ]
+    },
+    3:{
+      titre:"Les types de comique",
+      desc:"Les formes du rire au theatre",
+      termes:[
+        {mot:"Comique de geste",def:"Rire provoque par les mouvements."},
+        {mot:"Comique de mots",def:"Rire provoque par les paroles ou jeux de mots."},
+        {mot:"Comique de caractere",def:"Rire provoque par les defauts d'un personnage."},
+        {mot:"Comique de situation",def:"Rire provoque par une situation amusante ou inattendue."}
+      ]
+    }
+  };
+
+  // ===== RANDOMISER LES REPONSES DU QDB L'AVARE =====
+  // Rotation cyclique A->B->C pour que la bonne reponse ne soit pas toujours B
+  (function shuffleQDB(){
+    // Permutations cycliques selon la position de la question
+    // q%3==0 : pas de changement
+    // q%3==1 : [b,c,a] — B passe en A, C en B, A en C
+    // q%3==2 : [c,a,b] — C passe en A, A en B, B en C
+    const perms=[['a','b','c'],['b','c','a'],['c','a','b']];
+    Object.keys(QDB).forEach(function(key){
+      QDB[key].forEach(function(q,i){
+        var p=perms[i%3];
+        if(p[0]==='a') return; // pas de changement
+        var oa=q.a,ob=q.b,oc=q.c;
+        var orig={a:oa,b:ob,c:oc};
+        q.a=orig[p[0]]; q.b=orig[p[1]]; q.c=orig[p[2]];
+        // Trouver la nouvelle position de la bonne reponse
+        q.r=['a','b','c'][p.indexOf(q.r)];
+      });
+    });
+  })();
+
+  // ===== INIT =====
+  let curAct=1, curQAct=null, fromL=false, curVTab=1;
+  let quiz={questions:[],idx:0,answers:[],key:'',title:''};
+  let scores={};
+  try{scores=JSON.parse(localStorage.getItem('lav3')||'{}');}catch(e){}
+
+  // ===== NAVIGATION =====
+  function nav(p){
+    document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('active');});
+    document.querySelectorAll('.nm button').forEach(function(b){b.classList.remove('at');});
+    document.getElementById('panel-'+p).classList.add('active');
+    var t=document.getElementById('tab-'+p);
+    if(t) t.classList.add('at');
+    if(p==='lecons') renderL(curAct);
+    if(p==='qcm') renderAC();
+    if(p==='moyenne') renderM();
+    if(p==='vocab-theatre') renderVT(curVTab);
+  }
+
+  // ===== LECONS =====
+  function selAct(id){
+    curAct=id;
+    document.querySelectorAll('#ltabs .atab').forEach(function(b,i){b.classList.toggle('active',i+1===id);});
+    renderL(id);
+  }
+
+  function renderL(id){
+    var act=DB[id];
+    var h='<div class="pbox">'+act.t+' - '+act.s+'<br><small style="font-weight:400;font-style:normal">'+act.su+'</small></div>';
+    for(var i=1;i<=act.n;i++){
+      var s=act.sc[i],k=id+'-'+i,sc=scores[k];
+      var bdg=sc!==undefined?'<span class="bdg bd">'+sc+'/20</span>':'<span class="bdg bn">Non evalue</span>';
+      h+='<div class="lb"><div class="lh"><span>Scene '+i+' - '+s.t+'</span>'+bdg+'</div><div class="lbody"><div class="mt">Resume</div><p style="font-size:14px;margin:0 0 10px">'+s.c+'</p><div class="qbox">'+s.q+'</div><div class="mt">Analyse critique</div><p style="font-size:14px;margin:0 0 16px">'+s.a+'</p><button class="btn bbl" onclick="startQ('+id+','+i+',true)">Evaluation - Scene '+i+'</button></div></div>';
+    }
+    document.getElementById('ltarget').innerHTML=h;
+  }
+
+  // ===== QCM L'AVARE =====
+  function renderAC(){
+    document.getElementById('qas').style.display='block';
+    document.getElementById('qss').style.display='none';
+    updVocabCards();
+    var c=document.getElementById('qcards');
+    c.innerHTML=ACTS.map(function(a){
+      var as=[];
+      for(var i=1;i<=a.n;i++){var sc=scores[a.id+'-'+i];if(sc!==undefined)as.push(sc);}
+      var avg=as.length>0?(as.reduce(function(x,y){return x+y;},0)/as.length).toFixed(1)+'/20':'?';
+      return '<div class="acard" onclick="showSc('+a.id+')">'+'<span class="num">'+a.id+'</span>'+'<span class="albl">'+a.lbl+'</span>'+'<span class="asub">'+a.s+'</span>'+'<span class="acnt">'+as.length+'/'+a.n+' - '+avg+'</span></div>';
+    }).join('');
+  }
+
+  function updVocabCards(){
+    [1,2,3].forEach(function(n){
+      var k='vt-'+n,sc=scores[k];
+      var el=document.getElementById('vt'+n+'-num');
+      var cnt=document.getElementById('vt'+n+'-cnt');
+      if(el) el.textContent=sc!==undefined?sc:'?';
+      if(cnt) cnt.textContent=sc!==undefined?sc+'/20':'Non evalue';
+    });
+  }
+
+  function showAS(){
+    document.getElementById('qas').style.display='block';
+    document.getElementById('qss').style.display='none';
+  }
+
+  function showSc(id){
+    curQAct=id; fromL=false;
+    var act=DB[id];
+    document.getElementById('qsh').innerHTML='<div style="font-size:17px;font-weight:700;color:#0f172a;margin-bottom:3px">'+act.t+' - '+act.s+'</div><div style="font-size:13px;color:#64748b;margin-bottom:16px">'+act.n+' scenes disponibles</div>';
+    var h='';
+    for(var i=1;i<=act.n;i++){
+      var k=id+'-'+i,sc=scores[k];
+      var bdg=sc!==undefined?'<span class="bdg bd">'+sc+'/20</span>':'<span class="bdg bn">Non evalue</span>';
+      h+='<div class="sitem" onclick="startQ('+id+','+i+',false)"><span>Scene '+i+' - '+act.sc[i].t+'</span>'+bdg+'</div>';
+    }
+    document.getElementById('qsl').innerHTML=h;
+    document.getElementById('qas').style.display='none';
+    document.getElementById('qss').style.display='block';
+  }
+
+  // ===== VOCABULAIRE THEATRE LECONS =====
+  function selVTab(n){
+    curVTab=n;
+    document.querySelectorAll('#vtabs .atab').forEach(function(b,i){b.classList.toggle('active',i+1===n);});
+    renderVT(n);
+  }
+
+  function renderVT(n){
+    var cat=VOCAB_DB[n];
+    var sc=scores['vt-'+n];
+    var bdg=sc!==undefined?'<span class="bdg bd">'+sc+'/20</span>':'<span class="bdg bn">Non evalue</span>';
+    var rows=cat.termes.map(function(t){return '<tr><td style="font-weight:700;color:var(--dark);width:35%">'+t.mot+'</td><td>'+t.def+'</td></tr>';}).join('');
+    document.getElementById('vtarget').innerHTML='<div class="pbox">'+cat.titre+'<br><small style="font-weight:400;font-style:normal">'+cat.desc+'</small></div><div class="lb"><div class="lh"><span>'+cat.titre+'</span>'+bdg+'</div><div class="lbody"><div class="mt">Definitions a connaitre</div><table class="stbl" style="margin-top:10px"><thead><tr><th>Terme</th><th>Definition</th></tr></thead><tbody>'+rows+'</tbody></table><div style="margin-top:22px"><button class="btn bbl" onclick="startVocabQ('+n+')">&#9654; Passer le QCM - '+cat.titre+'</button></div></div></div>';
+  }
+
+  // ===== MOTEUR QCM =====
+  function startQ(aid,sid,fl){
+    var k=aid+'-'+sid,qs=QDB[k];
+    if(!qs){alert('QCM introuvable pour cette scene.');return;}
+    fromL=fl;
+    quiz={questions:qs,idx:0,answers:new Array(qs.length).fill(null),key:k,title:DB[aid].t+' - Scene '+sid+' - '+DB[aid].sc[sid].t};
+    buildSl();
+    document.getElementById('qtitle').textContent=quiz.title;
+    nav('quiz-engine');
+    updNav();
+  }
+
+  function startVocabQ(n){
+    var k='vt-'+n,qs=QDB[k];
+    if(!qs){alert('QCM introuvable. Cle: '+k);return;}
+    fromL=false;
+    quiz={questions:qs,idx:0,answers:new Array(qs.length).fill(null),key:k,title:VOCAB_DB[n].titre+' - QCM (10 questions)'};
+    buildSl();
+    document.getElementById('qtitle').textContent=quiz.title;
+    nav('quiz-engine');
+    updNav();
+  }
+
+  function buildSl(){
+    document.getElementById('qsls').innerHTML=quiz.questions.map(function(q,i){
+      return '<div class="qsl '+(i===0?'active':'')+'" id="qs-'+i+'"><p style="font-weight:700;font-size:16px;margin-bottom:16px">Q'+(i+1)+'. '+q.q+'</p>'+['a','b','c'].map(function(o){return '<label class="albl2" id="lb-'+i+'-'+o+'"><input type="radio" name="q'+i+'" value="'+o+'" onchange="pick('+i+',\''+o+'\')"> '+o.toUpperCase()+'. '+q[o]+'</label>';}).join('')+'<div class="expl" id="ex-'+i+'"></div></div>';
+    }).join('');
+  }
+
+  function pick(qi,ch){
+    quiz.answers[qi]=ch;
+    var q=quiz.questions[qi],ok=ch===q.r;
+    var ex=document.getElementById('ex-'+qi);
+    ex.style.display='block';
+    ex.className='expl '+(ok?'eok':'ebad');
+    ex.innerHTML='<strong>'+(ok?'Correct !':'Faux. Bonne reponse : '+q.r.toUpperCase()+'. '+q[q.r])+'</strong><br>'+q.e;
+    ['a','b','c'].forEach(function(o){
+      var l=document.getElementById('lb-'+qi+'-'+o);
+      if(!l) return;
+      if(o===q.r){l.style.background='#f0fdf4';l.style.borderColor='#15803d';}
+      else if(o===ch&&!ok){l.style.background='#fef2f2';l.style.borderColor='#dc2626';}
+      l.querySelector('input').disabled=true;
+    });
+    updNav();
+  }
+
+  function mv(d){
+    document.getElementById('qs-'+quiz.idx).classList.remove('active');
+    quiz.idx+=d;
+    document.getElementById('qs-'+quiz.idx).classList.add('active');
+    updNav();
+  }
+
+  function updNav(){
+    var i=quiz.idx,n=quiz.questions.length,ans=quiz.answers[i]!==null,last=i===n-1;
+    document.getElementById('qctr').textContent=(i+1)+'/'+n;
+    document.getElementById('bprev').disabled=i===0;
+    document.getElementById('bnext').style.display=last?'none':'inline-block';
+    document.getElementById('bnext').disabled=!ans;
+    document.getElementById('bfin').style.display=(last&&ans)?'inline-block':'none';
+  }
+
+  function finQ(){
+    var cor=0;
+    quiz.answers.forEach(function(a,i){if(a===quiz.questions[i].r)cor++;});
+    var tot=quiz.questions.length,gr=Math.round(cor/tot*20);
+    scores[quiz.key]=gr;
+    try{localStorage.setItem('lav3',JSON.stringify(scores));}catch(e){}
+    alert('Resultat : '+cor+'/'+tot+' reponses correctes\nNote : '+gr+'/20');
+    if(quiz.key.indexOf('vt-')===0){
+      var n=parseInt(quiz.key.split('-')[1]);
+      nav('vocab-theatre');
+      selVTab(n);
+      return;
+    }
+    var pts=quiz.key.split('-'),aid=parseInt(pts[0]),sid=parseInt(pts[1]);
+    if(fromL){
+      nav('lecons');
+      selAct(aid);
+      setTimeout(function(){
+        var bl=document.querySelectorAll('.lb');
+        if(bl[sid-1]) bl[sid-1].scrollIntoView({behavior:'smooth'});
+      },150);
+    } else {
+      nav('qcm');
+      showSc(aid);
+    }
+  }
+
+  // ===== MOYENNE =====
+  function renderM(){
+    var all=[],done=0,aH='';
+    ACTS.forEach(function(a){
+      var as=[],rows='';
+      for(var i=1;i<=a.n;i++){
+        var k=a.id+'-'+i,sc=scores[k];
+        if(sc!==undefined){as.push(sc);all.push(sc);done++;}
+        var col=sc!==undefined?(sc>=14?'color:#15803d;font-weight:700':sc>=10?'color:#d97706;font-weight:700':'color:#dc2626;font-weight:700'):'color:#94a3b8';
+        var tt=DB[a.id].sc[i].t.length>45?DB[a.id].sc[i].t.substring(0,45)+'...':DB[a.id].sc[i].t;
+        rows+='<tr><td>Scene '+i+'</td><td style="font-size:12px">'+tt+'</td><td style="'+col+'">'+(sc!==undefined?sc+'/20':'?')+'</td></tr>';
+      }
+      var avg=as.length>0?(as.reduce(function(x,y){return x+y;},0)/as.length).toFixed(1):'?';
+      var pct=Math.round(as.length/a.n*100);
+      aH+='<div class="asec"><div class="asech" data-id="ab'+a.id+'" onclick="tgD(this)"><span class="asect">'+a.lbl+' - '+a.s+'</span><span class="asecs">'+as.length+'/'+a.n+' - Moy. '+avg+'/20</span></div><div class="abody" id="ab'+a.id+'"><div style="padding:6px 4px 10px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;color:#64748b"><span>Progression</span><span>'+pct+'%</span></div><div class="pw"><div class="pb" style="width:'+pct+'%"></div></div></div><table class="stbl"><thead><tr><th>#</th><th>Scene</th><th>Note</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
+    });
+
+    // Section Vocabulaire Theatre
+    var vtNames=['Parties du theatre','Vocabulaire du theatre','Types de comique'];
+    var vtAs=[],vtRows='';
+    [1,2,3].forEach(function(n,i){
+      var k='vt-'+n,sc=scores[k];
+      if(sc!==undefined){vtAs.push(sc);all.push(sc);done++;}
+      var col=sc!==undefined?(sc>=14?'color:#15803d;font-weight:700':sc>=10?'color:#d97706;font-weight:700':'color:#dc2626;font-weight:700'):'color:#94a3b8';
+      vtRows+='<tr><td>QCM '+n+'</td><td style="font-size:12px">'+vtNames[i]+'</td><td style="'+col+'">'+(sc!==undefined?sc+'/20':'?')+'</td></tr>';
+    });
+    var vtAvg=vtAs.length>0?(vtAs.reduce(function(x,y){return x+y;},0)/vtAs.length).toFixed(1):'?';
+    aH+='<div class="asec" style="margin-top:8px"><div class="asech" data-id="abvt" onclick="tgD(this)"><span class="asect">Vocabulaire Theatre</span><span class="asecs">'+vtAs.length+'/3 - Moy. '+vtAvg+'/20</span></div><div class="abody" id="abvt"><div style="padding:6px 4px 10px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;color:#64748b"><span>Progression</span><span>'+Math.round(vtAs.length/3*100)+'%</span></div><div class="pw"><div class="pb" style="width:'+Math.round(vtAs.length/3*100)+'%"></div></div></div><table class="stbl"><thead><tr><th>#</th><th>Categorie</th><th>Note</th></tr></thead><tbody>'+vtRows+'</tbody></table></div></div>';
+
+    var totalQCM=35;
+    var gAvg=all.length>0?(all.reduce(function(x,y){return x+y;},0)/all.length).toFixed(1):'?';
+    var gPct=Math.round(done/totalQCM*100);
+    document.getElementById('mc').innerHTML='<div class="mtop"><div class="mst"><div class="mstl">Moyenne generale</div><div class="mstv">'+gAvg+'<span style="font-size:16px;color:#94a3b8">/20</span></div></div><div class="mst"><div class="mstl">QCM valides</div><div class="mstv">'+done+'<span style="font-size:16px;color:#94a3b8">/'+totalQCM+'</span></div></div><div class="mst"><div class="mstl">Progression globale</div><div class="mstv">'+gPct+'<span style="font-size:16px;color:#94a3b8">%</span></div></div></div>'+aH+'<div style="margin-top:22px;text-align:right"><button class="btn bgr" onclick="resetScores()">Reinitialiser les scores</button></div>';
+  }
+
+  function tgB(id){document.getElementById(id).classList.toggle('open');}
+  function tgD(el){document.getElementById(el.dataset.id).classList.toggle('open');}
+  function resetScores(){if(confirm('Effacer toutes vos notes ?')){try{localStorage.removeItem('lav3');}catch(e){}scores={};renderM();}}
+
+  // ===== INIT =====
+  renderAC();
+  renderL(1);
+  </script>
+  </body>
+  </html>
