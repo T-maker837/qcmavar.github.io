@@ -100,12 +100,12 @@
   </head>
   <body>
   <div class="nb">
-    <div class="logo" onclick="nav('accueil')">Moliere -- L'Avare (Piece Complete)</div>
+    <div class="logo" onclick="nav('accueil')">Molière -- L'Avare (Pièce Complete)</div>
     <div class="nm">
       <button id="tab-accueil" class="at" onclick="nav('accueil')">Accueil</button>
-      <button id="tab-lecons" onclick="nav('lecons')">Lecons</button>
+      <button id="tab-lecons" onclick="nav('lecons')">Leçons</button>
       <button id="tab-qcm" onclick="nav('qcm')">QCM</button>
-      <button id="tab-vocab-theatre" onclick="nav('vocab-theatre')">Vocabulaire Theatre</button>
+      <button id="tab-vocab-theatre" onclick="nav('vocab-theatre')">Vocabulaire Théatre</button>
       <button id="tab-moyenne" onclick="nav('moyenne')">Moyenne</button>
       <button id="tab-aide" onclick="nav('aide')">Aide</button>
     </div>
@@ -115,15 +115,15 @@
   <!-- ACCUEIL -->
   <div id="panel-accueil" class="panel active">
     <h1>L'Avare de Moliere</h1>
-    <p style="font-size:15px">Maitrisez la piece dans son integralite : 5 actes, 32 scenes analysees, 320 questions de controle. Plus un module complet sur le vocabulaire du theatre.</p>
+    <p style="font-size:15px">Maitrisez la pièce dans son integralite : 5 actes, 32 scènes analysees, 320 questions de controle. Plus un module complet sur le vocabulaire du théatre.</p>
     <div class="hgrid">
       <div class="hcard"><span class="big">5</span><span class="lbl">Actes</span></div>
-      <div class="hcard"><span class="big">32</span><span class="lbl">Scenes analysees</span></div>
+      <div class="hcard"><span class="big">32</span><span class="lbl">Scènes analysees</span></div>
       <div class="hcard"><span class="big">350</span><span class="lbl">Questions QCM</span></div>
     </div>
     <div class="dgrid" style="margin-top:22px">
       <div class="dcard" onclick="nav('lecons')"><h3>Fiches de Cours</h3><p style="font-size:13px;color:#64748b;margin:0">Analyse de chaque scene par acte : resume, citation, decryptage critique.</p></div>
-      <div class="dcard" onclick="nav('qcm')"><h3>Series d'Evaluations</h3><p style="font-size:13px;color:#64748b;margin:0">350 questions notees sur 20 avec correction instantanee, classees par acte.</p></div>
+      <div class="dcard" onclick="nav('qcm')"><h3>Séries d'Evaluations</h3><p style="font-size:13px;color:#64748b;margin:0">350 questions notees sur 20 avec correction instantanee, classees par acte.</p></div>
       <div class="dcard" onclick="nav('vocab-theatre')"><h3>Vocabulaire Theatre</h3><p style="font-size:13px;color:#64748b;margin:0">3 categories de vocabulaire : parties du theatre, termes dramaturgiques, types de comique.</p></div>
       <div class="dcard" onclick="nav('moyenne')"><h3>Tableau de Bord</h3><p style="font-size:13px;color:#64748b;margin:0">Suivez votre progression et votre moyenne generale toutes evaluations confondues.</p></div>
     </div>
@@ -131,7 +131,7 @@
 
   <!-- LECONS -->
   <div id="panel-lecons" class="panel">
-    <h1>Fiches de Cours -- L'Avare (Integrale)</h1>
+    <h1>Fiches de Cours -- L'Avare (Intégrale)</h1>
     <div class="atabs" id="ltabs">
       <button class="atab active" onclick="selAct(1)">Acte I</button>
       <button class="atab" onclick="selAct(2)">Acte II</button>
@@ -147,28 +147,28 @@
   <div id="panel-qcm" class="panel">
     <h1>Series QCM -- L'Avare (Integrale)</h1>
     <div id="qas">
-      <div class="sec-lbl">L'Avare de Moliere -- Choisissez un acte</div>
+      <div class="sec-lbl">L'Avare de Molière -- Choisissez un acte</div>
       <div class="acgrid" id="qcards"></div>
       <div class="sec-sep">
-        <div class="sec-lbl">Module Vocabulaire Theatre -- Choisissez une categorie</div>
+        <div class="sec-lbl">Module Vocabulaire Theatre -- Choisissez une catégorie</div>
         <div class="acgrid" id="qcards-vocab">
           <div class="acard" onclick="startVocabQ(1)">
             <span class="num" id="vt1-num">?</span>
-            <span class="albl">Parties du theatre</span>
+            <span class="albl">Parties du théatre</span>
             <span class="asub">Espaces et lieux</span>
-            <span class="acnt" id="vt1-cnt">Non evalue</span>
+            <span class="acnt" id="vt1-cnt">Non evalué</span>
           </div>
           <div class="acard" onclick="startVocabQ(2)">
             <span class="num" id="vt2-num">?</span>
             <span class="albl">Vocabulaire du theatre</span>
             <span class="asub">Termes dramaturgiques</span>
-            <span class="acnt" id="vt2-cnt">Non evalue</span>
+            <span class="acnt" id="vt2-cnt">Non évalue</span>
           </div>
           <div class="acard" onclick="startVocabQ(3)">
             <span class="num" id="vt3-num">?</span>
             <span class="albl">Types de comique</span>
             <span class="asub">Les formes du rire</span>
-            <span class="acnt" id="vt3-cnt">Non evalue</span>
+            <span class="acnt" id="vt3-cnt">Non évalue</span>
           </div>
         </div>
       </div>
